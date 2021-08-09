@@ -98,6 +98,12 @@ namespace rs232_Project
         }
         private void button1_Click(object sender, EventArgs e)
         {
+
+            string[] ports = SerialPort.GetPortNames();      // port isimlerini al
+            foreach (string port in ports)         // portları comboboxa ekle
+            {
+                cbx_serialname.Items.Add(port);
+            }
             if (cbx_serialname.Text != " " && cbx_boud.Text != " " && cbx_datasize.Text != "" )
             {
                 //bos deger girilmesi engellendi
@@ -158,7 +164,7 @@ namespace rs232_Project
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(25, 67);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 17);
+            this.label2.Size = new System.Drawing.Size(0, 13);
             this.label2.TabIndex = 0;
             // 
             // btn_open
@@ -176,19 +182,20 @@ namespace rs232_Project
             this.lbl_serialname.AutoSize = true;
             this.lbl_serialname.Location = new System.Drawing.Point(15, 40);
             this.lbl_serialname.Name = "lbl_serialname";
-            this.lbl_serialname.Size = new System.Drawing.Size(49, 17);
+            this.lbl_serialname.Size = new System.Drawing.Size(38, 13);
             this.lbl_serialname.TabIndex = 6;
             this.lbl_serialname.Text = "Name:";
             // 
             // cbx_serialname
             // 
+            this.cbx_serialname.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.Suggest;
+            this.cbx_serialname.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.ListItems;
             this.cbx_serialname.FormattingEnabled = true;
             this.cbx_serialname.Items.AddRange(new object[] {
-            "COM4",
-            "COM5"});
+            ""});
             this.cbx_serialname.Location = new System.Drawing.Point(18, 60);
             this.cbx_serialname.Name = "cbx_serialname";
-            this.cbx_serialname.Size = new System.Drawing.Size(133, 24);
+            this.cbx_serialname.Size = new System.Drawing.Size(133, 21);
             this.cbx_serialname.TabIndex = 1;
             // 
             // lbl_baud
@@ -196,7 +203,7 @@ namespace rs232_Project
             this.lbl_baud.AutoSize = true;
             this.lbl_baud.Location = new System.Drawing.Point(15, 109);
             this.lbl_baud.Name = "lbl_baud";
-            this.lbl_baud.Size = new System.Drawing.Size(41, 17);
+            this.lbl_baud.Size = new System.Drawing.Size(32, 13);
             this.lbl_baud.TabIndex = 8;
             this.lbl_baud.Text = "Baud";
             // 
@@ -216,7 +223,7 @@ namespace rs232_Project
             "57600"});
             this.cbx_boud.Location = new System.Drawing.Point(18, 135);
             this.cbx_boud.Name = "cbx_boud";
-            this.cbx_boud.Size = new System.Drawing.Size(132, 24);
+            this.cbx_boud.Size = new System.Drawing.Size(132, 21);
             this.cbx_boud.TabIndex = 2;
             // 
             // lbl_datasize
@@ -224,7 +231,7 @@ namespace rs232_Project
             this.lbl_datasize.AutoSize = true;
             this.lbl_datasize.Location = new System.Drawing.Point(15, 181);
             this.lbl_datasize.Name = "lbl_datasize";
-            this.lbl_datasize.Size = new System.Drawing.Size(69, 17);
+            this.lbl_datasize.Size = new System.Drawing.Size(53, 13);
             this.lbl_datasize.TabIndex = 10;
             this.lbl_datasize.Text = "Data Size";
             // 
@@ -236,7 +243,7 @@ namespace rs232_Project
             "8"});
             this.cbx_datasize.Location = new System.Drawing.Point(18, 210);
             this.cbx_datasize.Name = "cbx_datasize";
-            this.cbx_datasize.Size = new System.Drawing.Size(131, 24);
+            this.cbx_datasize.Size = new System.Drawing.Size(131, 21);
             this.cbx_datasize.TabIndex = 3;
             // 
             // backgroundWorker1
@@ -248,10 +255,9 @@ namespace rs232_Project
             this.listbox_degerler.BackColor = System.Drawing.SystemColors.Info;
             this.listbox_degerler.FormattingEnabled = true;
             this.listbox_degerler.HorizontalScrollbar = true;
-            this.listbox_degerler.ItemHeight = 16;
             this.listbox_degerler.Location = new System.Drawing.Point(12, 87);
             this.listbox_degerler.Name = "listbox_degerler";
-            this.listbox_degerler.Size = new System.Drawing.Size(499, 388);
+            this.listbox_degerler.Size = new System.Drawing.Size(499, 381);
             this.listbox_degerler.TabIndex = 18;
             // 
             // panel_giris
@@ -285,7 +291,7 @@ namespace rs232_Project
             this.lbl_kilo.AutoSize = true;
             this.lbl_kilo.Location = new System.Drawing.Point(48, 12);
             this.lbl_kilo.Name = "lbl_kilo";
-            this.lbl_kilo.Size = new System.Drawing.Size(0, 17);
+            this.lbl_kilo.Size = new System.Drawing.Size(0, 13);
             this.lbl_kilo.TabIndex = 19;
             // 
             // lbl_kg
@@ -293,7 +299,7 @@ namespace rs232_Project
             this.lbl_kg.AutoSize = true;
             this.lbl_kg.Location = new System.Drawing.Point(89, 12);
             this.lbl_kg.Name = "lbl_kg";
-            this.lbl_kg.Size = new System.Drawing.Size(28, 17);
+            this.lbl_kg.Size = new System.Drawing.Size(22, 13);
             this.lbl_kg.TabIndex = 20;
             this.lbl_kg.Text = "KG";
             // 
@@ -322,7 +328,7 @@ namespace rs232_Project
             this.lbl_tare1.AutoSize = true;
             this.lbl_tare1.Location = new System.Drawing.Point(77, 11);
             this.lbl_tare1.Name = "lbl_tare1";
-            this.lbl_tare1.Size = new System.Drawing.Size(45, 17);
+            this.lbl_tare1.Size = new System.Drawing.Size(36, 13);
             this.lbl_tare1.TabIndex = 24;
             this.lbl_tare1.Text = "TARE";
             // 
@@ -331,7 +337,7 @@ namespace rs232_Project
             this.lbl_tare.AutoSize = true;
             this.lbl_tare.Location = new System.Drawing.Point(54, 11);
             this.lbl_tare.Name = "lbl_tare";
-            this.lbl_tare.Size = new System.Drawing.Size(0, 17);
+            this.lbl_tare.Size = new System.Drawing.Size(0, 13);
             this.lbl_tare.TabIndex = 23;
             // 
             // menuStrip1
@@ -342,20 +348,20 @@ namespace rs232_Project
             this.tCPClientToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(696, 28);
+            this.menuStrip1.Size = new System.Drawing.Size(696, 24);
             this.menuStrip1.TabIndex = 26;
             this.menuStrip1.Text = "menuStrip1";
             // 
             // serialToolStripMenuItem
             // 
             this.serialToolStripMenuItem.Name = "serialToolStripMenuItem";
-            this.serialToolStripMenuItem.Size = new System.Drawing.Size(60, 24);
+            this.serialToolStripMenuItem.Size = new System.Drawing.Size(47, 20);
             this.serialToolStripMenuItem.Text = "Serial";
             // 
             // tCPClientToolStripMenuItem
             // 
             this.tCPClientToolStripMenuItem.Name = "tCPClientToolStripMenuItem";
-            this.tCPClientToolStripMenuItem.Size = new System.Drawing.Size(89, 24);
+            this.tCPClientToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.tCPClientToolStripMenuItem.Text = "TCP Client";
             this.tCPClientToolStripMenuItem.Click += new System.EventHandler(this.tCPClientToolStripMenuItem_Click);
             // 

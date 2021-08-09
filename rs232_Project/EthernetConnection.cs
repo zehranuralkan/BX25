@@ -149,16 +149,19 @@ namespace rs232_Project
 
             if (bit210 == "000")
             {
-               
+                double yeni_deger = (Convert.ToInt32(deger2) * 100);
+                lbl_kilodeger.Text = yeni_deger.ToString();
 
             }
             else if (bit210 == "001")
             {
-
+                double yeni_deger = (Convert.ToInt32(deger2) * 10);
+                lbl_kilodeger.Text = yeni_deger.ToString();
             }
             else if (bit210 == "010")
             {
-
+                
+                lbl_kilodeger.Text = deger2.ToString();
             }
             else if (bit210 == "011")
             {
@@ -167,19 +170,23 @@ namespace rs232_Project
             }
             else if (bit210 == "100")
             {
-
+                double yeni_deger = (Convert.ToInt32(deger2) * 0.01);
+                lbl_kilodeger.Text = yeni_deger.ToString();
             }
             else if (bit210 == "101")
             {
-
+                double yeni_deger = (Convert.ToInt32(deger2) * 0.001);
+                lbl_kilodeger.Text = yeni_deger.ToString();
             }
             else if (bit210 == "110")
             {
-
+                double yeni_deger = (Convert.ToInt32(deger2) * 0.0001);
+                lbl_kilodeger.Text = yeni_deger.ToString();
             }
             else if (bit210 == "111")
             {
-
+                double yeni_deger = (Convert.ToInt32(deger2) * 0.00001);
+                lbl_kilodeger.Text = yeni_deger.ToString();
             }
 
         }
