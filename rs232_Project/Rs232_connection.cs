@@ -29,13 +29,10 @@ namespace rs232_Project
                     serialPort.Handshake = Handshake.None; //baglanti noktasi iletisiminde denetim 
 
                 }
-
                 catch(Exception ex)
                 {
                     MessageBox.Show(ex.GetType().Name + Environment.NewLine + ex.Message);
                 }
-
-                
             }
         }
     }

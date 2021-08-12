@@ -14,6 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 
+
 namespace rs232_Project
 {
     public partial class EthernetConnection : Form
@@ -35,13 +36,11 @@ namespace rs232_Project
                 clientReceiveThread.IsBackground = true;
                 clientReceiveThread.Start();
             }
-            catch (Exception )
+            catch (Exception)
             {
-                MessageBox.Show("ConnectToTcpServer error");
+                MessageBox.Show("ConnectToTcpServer Error");
             }
         }
-
-
         private void ListenForData()
         {
             try
@@ -49,8 +48,7 @@ namespace rs232_Project
                 socketConnection = new TcpClient(tbx_moduleip.Text, Convert.ToInt32(tbx_port.Text));
                 Byte[] bytes = new Byte[1024];
                 while (true)
-                {
-                    // Get a stream object for reading 				
+                { // Get a stream object for reading 				
                     using (NetworkStream stream = socketConnection.GetStream())
                     {
                         int length;
@@ -63,42 +61,30 @@ namespace rs232_Project
                            int bytesRead = stream.Read(bytesToRead, 0, socketConnection.ReceiveBufferSize);
                            Control.CheckForIllegalCrossThreadCalls = false;
                       
-                           string deger = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
-                            
-                           listbox_ethernetCon.Items.Add(deger);
-                           CheckParse(deger);
-
-                            PositiveOrNegative(deger);
-                            StabilOrNot(deger);
-                            NoktaGoster(deger);
-                        }
+                           string value = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead); 
+                           listbox_ethernetCon.Items.Add(value);
+                           CheckParse(value);
+                           PositiveOrNegative(value);
+                           StabilOrNot(value);
+                           ShowPoint(value);
+                          }
                     }
                 }
-              
-
             }
-            catch (Exception )
+            catch (Exception)
             {
-                MessageBox.Show("socketException");
+                MessageBox.Show("Socket Exception");
             }
         }
-
-
-        public void PositiveOrNegative(string deger1)
+        public void PositiveOrNegative(string value1)
         {
-          
-            byte[] ba = Encoding.Default.GetBytes(deger1); ;
-
+            byte[] ba = Encoding.Default.GetBytes(value1); 
             var hexString = BitConverter.ToString(ba);
             hexString = hexString.Replace("-", "");
-           
             string stb = hexString.Substring(4, 2);
-            
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-           
             string bit1 = binaryval.Substring(4,1);
-          
-           
+
             if (bit1 == "1")
             {
                 lbl_negative.Text = "-";
@@ -109,16 +95,14 @@ namespace rs232_Project
             }
 
         }
-
-        public void StabilOrNot(string deger1)
+        public void StabilOrNot(string value1)
         {
-            byte[] ba = Encoding.Default.GetBytes(deger1); ;
+            byte[] ba = Encoding.Default.GetBytes(value1); ;
 
             var hexString = BitConverter.ToString(ba);
             hexString = hexString.Replace("-", "");
             string stb = hexString.Substring(4, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-         
             string bit3 = binaryval.Substring(2, 1);
          
             if (bit3 == "1")
@@ -131,80 +115,69 @@ namespace rs232_Project
             }
 
         }
-
-        public void  NoktaGoster(string deger1)
+        public void  ShowPoint(string value1)
         {
-            byte[] ba = Encoding.Default.GetBytes(deger1); 
+            byte[] ba = Encoding.Default.GetBytes(value1); 
             var hexString = BitConverter.ToString(ba);
-        
             hexString = hexString.Replace("-", "");
             string stb = hexString.Substring(2, 2);
-           
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-           
             string bit210=binaryval.Substring(4, 3);
-            int ayir = deger1.IndexOf(' ');
-
-            string deger2 = deger1.Substring(6, ayir);
+            int parse = value1.IndexOf(' ');
+            string value2 = value1.Substring(6, parse);
 
             if (bit210 == "000")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 100);
-                lbl_kilodeger.Text = yeni_deger.ToString();
-
+                double new_value = (Convert.ToInt32(value2) * 100);
+                lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "001")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 10);
-                lbl_kilodeger.Text = yeni_deger.ToString();
+                double new_value = (Convert.ToInt32(value2) * 10);
+                lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "010")
-            {
-                
-                lbl_kilodeger.Text = deger2.ToString();
+            { 
+                lbl_weightvalue.Text = value2.ToString();
             }
             else if (bit210 == "011")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 0.1);
-                lbl_kilodeger.Text = yeni_deger.ToString();
+                double new_value = (Convert.ToInt32(value2) * 0.1);
+                lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "100")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 0.01);
-                lbl_kilodeger.Text = yeni_deger.ToString();
+                double new_value = (Convert.ToInt32(value2) * 0.01);
+                lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "101")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 0.001);
-                lbl_kilodeger.Text = yeni_deger.ToString();
+                double new_value = (Convert.ToInt32(value2) * 0.001);
+                lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "110")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 0.0001);
-                lbl_kilodeger.Text = yeni_deger.ToString();
+                double new_value = (Convert.ToInt32(value2) * 0.0001);
+                lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "111")
             {
-                double yeni_deger = (Convert.ToInt32(deger2) * 0.00001);
-                lbl_kilodeger.Text = yeni_deger.ToString();
+                double new_value = (Convert.ToInt32(value2) * 0.00001);
+                lbl_weightvalue.Text = new_value.ToString();
             }
-
         }
-        private void CheckParse(string veri1)
+        private void CheckParse(string data1)
         //deger'i 6 bit ayirma islemi
         {
             try
             {
-                int ayir = veri1.IndexOf(' ');
-                lbl_kilodeger.Text = veri1.Substring(6, ayir);
-                lbl_taredeger.Text = veri1.Substring(12, ayir);
+                int parse = data1.IndexOf(' ');
+                lbl_weightvalue.Text = data1.Substring(6, parse);
+                lbl_tarevalue.Text = data1.Substring(12, parse);
             }
-
             catch
             {
-
             }
-
         }
         private void Main()
         {
@@ -213,6 +186,9 @@ namespace rs232_Project
         private void btn_connect_Click(object sender, EventArgs e)
         {
             Main();
+            
+            btn_connect.Visible = false;
+            btn_disconnect.Visible = true;
         }
 
         private void btn_disconnect_Click(object sender, EventArgs e)
@@ -220,7 +196,25 @@ namespace rs232_Project
             Close();
         }
 
-        
+        private void serialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SerialConnection serialcon = new SerialConnection();
+            this.Hide();
+            serialcon.Show();
+        }
+
+        private void EthernetConnection_Load(object sender, EventArgs e)
+        {
+            btn_disconnect.Visible = false;
+            btn_connect.Visible = true;
+        }
+
+        private void uDPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            UdpConnection udpcon = new UdpConnection();
+            this.Hide();
+            udpcon.Show();
+        }
     }
 }
 

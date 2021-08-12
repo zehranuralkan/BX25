@@ -15,7 +15,6 @@ C:\Users\HP\source\repos\rs232_Project\rs232_Project\bin\Debug\System.ValueTuple
 C:\Users\HP\source\repos\rs232_Project\rs232_Project\bin\Debug\System.ValueTuple.xml
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.csprojAssemblyReference.cache
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.EthernetConnection.resources
-C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.Form1.resources
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.Properties.Resources.resources
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.csproj.GenerateResource.cache
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.csproj.CoreCompileInputs.cache
@@ -28,3 +27,5 @@ C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\bin\Debug\Si
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\bin\Debug\System.ValueTuple.dll
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\bin\Debug\System.ValueTuple.xml
 C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.csproj.CopyComplete
+C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.SerialConnection.resources
+C:\Users\yazilim.kullanici\Desktop\rs232_Project-main\rs232_Project\obj\Debug\rs232_Project.UdpConnection.resources
