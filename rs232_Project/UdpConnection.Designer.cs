@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.panel_udp = new System.Windows.Forms.Panel();
             this.btn_send = new System.Windows.Forms.Button();
             this.tbx_send1 = new System.Windows.Forms.TextBox();
@@ -36,6 +37,7 @@
             this.tCPClientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uDPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.listbox_recieved_data = new System.Windows.Forms.ListBox();
+            this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -101,6 +103,10 @@
             this.listbox_recieved_data.Size = new System.Drawing.Size(353, 173);
             this.listbox_recieved_data.TabIndex = 2;
             // 
+            // timer1
+            // 
+          //  this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
+            // 
             // UdpConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -114,7 +120,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "UdpConnection";
             this.Text = "UdpConnection";
-            this.Load += new System.EventHandler(this.UdpConnection_Load);
+         //   this.Load += new System.EventHandler(this.UdpConnection_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
@@ -132,5 +138,6 @@
         private System.Windows.Forms.ToolStripMenuItem tCPClientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uDPToolStripMenuItem;
         private System.Windows.Forms.ListBox listbox_recieved_data;
+        private System.Windows.Forms.Timer timer1;
     }
 }

@@ -41,6 +41,7 @@ namespace rs232_Project
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.serialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tCPClientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.uDPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.btn_disconnect = new System.Windows.Forms.Button();
             this.lbl_deger = new System.Windows.Forms.Label();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
@@ -53,7 +54,6 @@ namespace rs232_Project
             this.panel_bilgi = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.uDPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.panel_bilgi.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -146,6 +146,13 @@ namespace rs232_Project
             this.tCPClientToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.tCPClientToolStripMenuItem.Text = "TCP Client";
             // 
+            // uDPToolStripMenuItem
+            // 
+            this.uDPToolStripMenuItem.Name = "uDPToolStripMenuItem";
+            this.uDPToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
+            this.uDPToolStripMenuItem.Text = "UDP";
+            this.uDPToolStripMenuItem.Click += new System.EventHandler(this.uDPToolStripMenuItem_Click);
+            // 
             // btn_disconnect
             // 
             this.btn_disconnect.Location = new System.Drawing.Point(107, 76);
@@ -165,6 +172,10 @@ namespace rs232_Project
             this.lbl_deger.Name = "lbl_deger";
             this.lbl_deger.Size = new System.Drawing.Size(0, 13);
             this.lbl_deger.TabIndex = 8;
+            // 
+            // timer1
+            // 
+            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // lbl_kilo
             // 
@@ -262,18 +273,11 @@ namespace rs232_Project
             this.panel2.Size = new System.Drawing.Size(213, 120);
             this.panel2.TabIndex = 19;
             // 
-            // uDPToolStripMenuItem
-            // 
-            this.uDPToolStripMenuItem.Name = "uDPToolStripMenuItem";
-            this.uDPToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
-            this.uDPToolStripMenuItem.Text = "UDP";
-            this.uDPToolStripMenuItem.Click += new System.EventHandler(this.uDPToolStripMenuItem_Click);
-            // 
             // EthernetConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 445);
+            this.ClientSize = new System.Drawing.Size(728, 395);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lbl_deger);
             this.Controls.Add(this.listbox_ethernetCon);

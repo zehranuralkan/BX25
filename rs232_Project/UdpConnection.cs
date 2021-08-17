@@ -26,67 +26,81 @@ namespace rs232_Project
 
         private void btn_send_Click(object sender, EventArgs e)
         {
+            
+            Send();
+        }
+
+        public void Send()
+        {
+
             UdpClient client = new UdpClient();
-            IPEndPoint ip = new IPEndPoint(IPAddress.Parse("192.168.15.136"), 3250); 
+            IPEndPoint ip = new IPEndPoint(IPAddress.Parse("192.168.15.136"), 3250);
             byte[] bytes = Encoding.ASCII.GetBytes(tbx_send1.Text);
             client.Send(bytes, bytes.Length, ip);
+
             client.Close();
-          
+            //Receive(null);
+            timer1.Start();
+            timer1.Stop();
+
         }
-
-
-		//private void btn_send2_Click(object sender, EventArgs e)
-		//{
-		//	UdpClient client = new UdpClient();
-		//	IPEndPoint ip = new IPEndPoint(IPAddress.Parse("192.168.15.136"), 3250);
-  //          byte[] bytes = Encoding.ASCII.GetBytes(tbx_send1.Text);
-  //          client.Send(bytes, bytes.Length, ip);
-  //          client.Close();
-         
-		//}
-
-
-
-
-
-		//public void Server()
-  //      {
-  //          try
-  //          {
-  //              IPAddress ipAd = IPAddress.Parse("192.168.15.135");
-               
-  //              TcpListener myList = new TcpListener(ipAd, 3250);
-
-              
-  //              myList.Start();
-
-             
-
-  //              Socket s = myList.AcceptSocket();
-             
-  //              byte[] b = new byte[100];
-  //              int k = s.Receive(b);
-  //               for (int i = 0; i < k; i++)
-  //                  Console.Write(Convert.ToChar(b[i]));
-
-  //              ASCIIEncoding asen = new ASCIIEncoding();
-  //              s.Send(asen.GetBytes(asen));
-               
-  //              /* clean up */
-  //              s.Close();
-  //              myList.Stop();
-
-  //          }
-  //          catch (Exception e)
-  //          {
-              
-  //          }
-  //      }
-
-        private void UdpConnection_Load(object sender, EventArgs e)
+        private TcpClient socketConnection;
+        public void ListenToData()
         {
-          
+            UdpClient udpServer = new UdpClient();
+            IPEndPoint remoteEP = new IPEndPoint(IPAddress.Any, 0);
+
+            TcpListener listener = new TcpListener(IPAddress.Parse("192.168.15.135"), 3250);
+            listener.Start();
+            Socket sck = listener.AcceptTcpClient().Client;
+
+            var data = udpServer.Receive(ref remoteEP);
+            string result = Encoding.UTF8.GetString(data);
+
+            //socketConnection = new TcpClient("192.168.15.136", 3250);
+            //Byte[] bytes = new Byte[1024];
+            //while (true)
+            //{
+            //    using (NetworkStream stream = socketConnection.GetStream())
+            //    {
+            //        int length;
+
+            //        while ((length = stream.Read(bytes, 0, bytes.Length)) != 0)
+            //        {
+            //            var incommingData = new byte[length];
+            //            Array.Copy(bytes, 0, incommingData, 0, length);
+            //            byte[] bytesToRead = new byte[socketConnection.ReceiveBufferSize];
+            //            int bytesRead = stream.Read(bytesToRead, 0, socketConnection.ReceiveBufferSize);
+            //            Control.CheckForIllegalCrossThreadCalls = false;
+
+            //            string value = Encoding.ASCII.GetString(bytesToRead, 0, bytesRead);
+            //        }
+
+            //    }
+            //}
         }
+        //private void timer1_Tick(object sender, EventArgs e)
+        //{
+        //    ListenToData();
+   
+        //}
+
+        //private Thread clientReceiveThread;
+        //private void ConnectToUdp()
+        //{
+        //    try
+        //    {
+        //        clientReceiveThread = new Thread(new ThreadStart(ListenToData));
+        //        clientReceiveThread.IsBackground = true;
+        //        clientReceiveThread.Start();
+        //    }
+        //    catch (Exception)
+        //    {
+        //        MessageBox.Show("ConnectToUdpServer Error");
+        //    }
+        //}
+
+     
     }
 }
 
