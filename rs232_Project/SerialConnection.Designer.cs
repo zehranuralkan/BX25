@@ -53,7 +53,6 @@
 
         private System.IO.Ports.SerialPort serialPort1;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_open;
         private System.IO.Ports.SerialPort serialPort;
         private System.Windows.Forms.Label lbl_serialname;
@@ -77,6 +76,12 @@
         private System.Windows.Forms.ToolStripMenuItem tCPClientToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem uDPToolStripMenuItem;
         private System.Windows.Forms.Button btn_database;
+        private System.Windows.Forms.Timer timer_disconnect;
+        private System.Windows.Forms.Label lbl_stabilornot;
+        private System.Windows.Forms.Panel pnl_input;
+        private System.Windows.Forms.Label lbl_inputval;
+        private System.Windows.Forms.Label lbl_input;
+        private System.Windows.Forms.Label lbl_output;
     }
 }
 

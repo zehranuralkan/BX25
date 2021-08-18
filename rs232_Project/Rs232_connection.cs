@@ -17,8 +17,9 @@ namespace rs232_Project
         {
             if (serialPort.IsOpen)
             
-                serialPort.Close();
-            
+            serialPort.Close();
+            serialPort.Handshake = Handshake.XOnXOff;
+
             if (!serialPort.IsOpen)
             {
                 try

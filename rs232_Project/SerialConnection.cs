@@ -13,67 +13,66 @@ namespace rs232_Project
 {
     public partial class SerialConnection : Form
     {
-
-
         public SerialConnection()
         {
             InitializeComponent();
         }
-
-
-
         public string value = "";
         private void serialPort_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
-            try
+            if (btn_open.Visible == false)
             {
-                value = Rs232_connection.serialPort.ReadLine();
-                Control.CheckForIllegalCrossThreadCalls = false;
-                listbox_values.Items.Add(value);
-                CheckParse(value);
-                lbl_kg.Text = "KG";
-                lbl_tare1.Text = "TARE";
-            }
-            catch (System.IO.IOException)
-            {
-                MessageBox.Show("I/o Exception");
-            }
-            catch (InvalidOperationException)
-            {
-                value = "";
-            }
-            try
-            {
-                base.Invoke(new EventHandler(this.DisplayText));
-            }
-            catch (FormatException)
-            {
-                MessageBox.Show("Format Exception");
-            }
-            catch (InvalidOperationException)
-            {
-                MessageBox.Show("Invalid Operation Exception");
-
-            }
-            catch (IndexOutOfRangeException)
-            {
-                MessageBox.Show("Index Out Of Range Exception");
-            }
+                try
+                {
+                    value = Rs232_connection.serialPort.ReadLine();
+                    Control.CheckForIllegalCrossThreadCalls = false;
+                    listbox_values.Items.Add(value);
+                    CheckParse(value); 
+                    lbl_kg.Text = "KG";
+                    lbl_tare1.Text = "TARE";
+                }
+                catch (System.IO.IOException)
+                {
+                    MessageBox.Show("I/o Exception");
+                }
+                catch (InvalidOperationException)
+                {
+                    value = "";
+                }
+                try
+                {
+                    base.Invoke(new EventHandler(this.DisplayText));
+                }
+                catch (FormatException)
+                {
+                    MessageBox.Show("Format Exception");
+                }
+                catch (InvalidOperationException)
+                {
+                    MessageBox.Show("Invalid Operation Exception");
+                }
+                catch (IndexOutOfRangeException)
+                {
+                    MessageBox.Show("Index Out Of Range Exception");
+                }
+            }  
         }
         private void CheckParse(string value1)
         //deger'i 6 bit ayirma islemi
         {
             try
-            { 
+            {
                 int parse = value1.IndexOf(' ');
-                lbl_weight.Text = value1.Substring(6, parse);
-                lbl_tare.Text = value1.Substring(12, parse);
+                lbl_weight.Text = value1.Substring(6, 9);
+
+                lbl_tare.Text = value1.Substring(11, 6);
+              lbl_inputval.Text= value1.Substring(4,2);
+                
             }
             catch
             {
             }
         }
- 
         private void DisplayText(object sender, EventArgs e)
         {
         }
@@ -88,12 +87,32 @@ namespace rs232_Project
         private void Form1_Load_1(object sender, EventArgs e)
         {
             ComboboxData();
-            Rs232_connection.serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived); //verileri alir
             btn_open.Visible = true;
             btn_disconnect.Visible = false;
             btn_database.Visible = false;
+            Rs232_connection.serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived); //verileri alir
         }
-        private void button1_Click(object sender, EventArgs e)
+
+        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+        }
+        private void tCPClientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            EthernetConnection ethernetcon = new EthernetConnection();
+            this.Hide();
+            ethernetcon.Show();
+
+        }
+        private void btn_database_Click(object sender, EventArgs e)
+        {
+            CheckDatabase();
+            SqlCommand komut = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare,Input) values ('" + cbx_serialname.Text.ToString() + "','" + cbx_boud.Text.ToString() + "','" +cbx_datasize.Text.ToString() + "','" + lbl_weight.Text+"','" + lbl_tare.Text+"','" + lbl_inputval.Text + "')", sqldata);
+            komut.ExecuteNonQuery();
+            sqldata.Close();
+        }
+
+        private void btn_open_Click(object sender, EventArgs e)
         {
             if (cbx_serialname.Text != " " && cbx_boud.Text != " " && cbx_datasize.Text != "")
             {
@@ -111,66 +130,43 @@ namespace rs232_Project
                 }
             }
             else MessageBox.Show("Gerekli alanları doldurunuz");
-           
         }
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
 
-        }
-        private void button1_Click_1(object sender, EventArgs e)
+        private void btn_disconnect_Click(object sender, EventArgs e)
         {
-            Close();
+            serialPort.Close();
+            listbox_values.Items.Clear();
             btn_open.Visible = true;
             btn_disconnect.Visible = false;
-        }
-        private void tCPClientToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            EthernetConnection ethernetcon = new EthernetConnection();
-            this.Hide();
-            ethernetcon.Show();
+            btn_database.Visible = false;
+            lbl_weight.Text = " ";
+            lbl_tare.Text = " ";
+            lbl_inputval.Text = " ";
 
         }
-        int name;
-        private void btn_database_Click(object sender, EventArgs e)
-        {
-
-            CheckDatabase();
-            SqlCommand komut = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare) values ('" + cbx_serialname.Text.ToString() + "','" + cbx_boud.Text.ToString() + "','" +cbx_datasize.Text.ToString() + "','" + lbl_weight.Text+"','" + lbl_tare.Text+"')", sqldata);
-            komut.ExecuteNonQuery();
-            sqldata.Close();
-
-
-        }
-
         SqlConnection sqldata = new SqlConnection("Data Source=emansuroglu; Initial Catalog=BX25_Project; User Id=sa; password=Baykon1987");
 
         public void CheckDatabase()
         {
-
             try
             {
                 sqldata.Open();
              
-                }
+            }
             catch (SqlException)
             {
                 MessageBox.Show("Sql Exception");
             }
         }
-  
-
             private void uDPToolStripMenuItem_Click(object sender, EventArgs e)
             {
                 UdpConnection udpcon = new UdpConnection();
                 this.Hide();
                 udpcon.Show();
             }
-
-
             private void InitializeComponent()
             {
             this.components = new System.ComponentModel.Container();
-            this.label2 = new System.Windows.Forms.Label();
             this.btn_open = new System.Windows.Forms.Button();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.lbl_serialname = new System.Windows.Forms.Label();
@@ -187,6 +183,7 @@ namespace rs232_Project
             this.lbl_weight = new System.Windows.Forms.Label();
             this.lbl_kg = new System.Windows.Forms.Label();
             this.panel_kilo = new System.Windows.Forms.Panel();
+            this.lbl_stabilornot = new System.Windows.Forms.Label();
             this.panel_tare = new System.Windows.Forms.Panel();
             this.lbl_tare1 = new System.Windows.Forms.Label();
             this.lbl_tare = new System.Windows.Forms.Label();
@@ -194,19 +191,17 @@ namespace rs232_Project
             this.serialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tCPClientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uDPToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.timer_disconnect = new System.Windows.Forms.Timer(this.components);
+            this.pnl_input = new System.Windows.Forms.Panel();
+            this.lbl_input = new System.Windows.Forms.Label();
+            this.lbl_inputval = new System.Windows.Forms.Label();
+            this.lbl_output = new System.Windows.Forms.Label();
             this.panel_giris.SuspendLayout();
             this.panel_kilo.SuspendLayout();
             this.panel_tare.SuspendLayout();
             this.menuStrip1.SuspendLayout();
+            this.pnl_input.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 41);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(0, 13);
-            this.label2.TabIndex = 0;
             // 
             // btn_open
             // 
@@ -216,7 +211,7 @@ namespace rs232_Project
             this.btn_open.TabIndex = 7;
             this.btn_open.Text = "Connect";
             this.btn_open.UseVisualStyleBackColor = true;
-            this.btn_open.Click += new System.EventHandler(this.button1_Click);
+            this.btn_open.Click += new System.EventHandler(this.btn_open_Click);
             // 
             // lbl_serialname
             // 
@@ -303,7 +298,7 @@ namespace rs232_Project
             // 
             // panel_giris
             // 
-            this.panel_giris.BackColor = System.Drawing.Color.PeachPuff;
+            this.panel_giris.BackColor = System.Drawing.Color.Tan;
             this.panel_giris.Controls.Add(this.btn_database);
             this.panel_giris.Controls.Add(this.btn_disconnect);
             this.panel_giris.Controls.Add(this.cbx_datasize);
@@ -320,7 +315,7 @@ namespace rs232_Project
             // 
             // btn_database
             // 
-            this.btn_database.Location = new System.Drawing.Point(18, 258);
+            this.btn_database.Location = new System.Drawing.Point(16, 258);
             this.btn_database.Name = "btn_database";
             this.btn_database.Size = new System.Drawing.Size(133, 30);
             this.btn_database.TabIndex = 18;
@@ -336,13 +331,13 @@ namespace rs232_Project
             this.btn_disconnect.TabIndex = 17;
             this.btn_disconnect.Text = "Disconnect";
             this.btn_disconnect.UseVisualStyleBackColor = true;
-            this.btn_disconnect.Click += new System.EventHandler(this.button1_Click_1);
+            this.btn_disconnect.Click += new System.EventHandler(this.btn_disconnect_Click);
             // 
             // lbl_weight
             // 
             this.lbl_weight.AutoSize = true;
             this.lbl_weight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_weight.Location = new System.Drawing.Point(40, 6);
+            this.lbl_weight.Location = new System.Drawing.Point(56, 8);
             this.lbl_weight.Name = "lbl_weight";
             this.lbl_weight.Size = new System.Drawing.Size(0, 18);
             this.lbl_weight.TabIndex = 19;
@@ -351,7 +346,7 @@ namespace rs232_Project
             // 
             this.lbl_kg.AutoSize = true;
             this.lbl_kg.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_kg.Location = new System.Drawing.Point(87, 6);
+            this.lbl_kg.Location = new System.Drawing.Point(96, 9);
             this.lbl_kg.Name = "lbl_kg";
             this.lbl_kg.Size = new System.Drawing.Size(32, 18);
             this.lbl_kg.TabIndex = 20;
@@ -360,28 +355,39 @@ namespace rs232_Project
             // panel_kilo
             // 
             this.panel_kilo.BackColor = System.Drawing.Color.Tan;
+            this.panel_kilo.Controls.Add(this.lbl_output);
+            this.panel_kilo.Controls.Add(this.lbl_stabilornot);
             this.panel_kilo.Controls.Add(this.lbl_kg);
             this.panel_kilo.Controls.Add(this.lbl_weight);
-            this.panel_kilo.Location = new System.Drawing.Point(119, 50);
+            this.panel_kilo.Location = new System.Drawing.Point(195, 50);
             this.panel_kilo.Name = "panel_kilo";
             this.panel_kilo.Size = new System.Drawing.Size(131, 31);
             this.panel_kilo.TabIndex = 23;
+            // 
+            // lbl_stabilornot
+            // 
+            this.lbl_stabilornot.AutoSize = true;
+            this.lbl_stabilornot.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_stabilornot.Location = new System.Drawing.Point(15, 10);
+            this.lbl_stabilornot.Name = "lbl_stabilornot";
+            this.lbl_stabilornot.Size = new System.Drawing.Size(0, 18);
+            this.lbl_stabilornot.TabIndex = 27;
             // 
             // panel_tare
             // 
             this.panel_tare.BackColor = System.Drawing.Color.Tan;
             this.panel_tare.Controls.Add(this.lbl_tare1);
             this.panel_tare.Controls.Add(this.lbl_tare);
-            this.panel_tare.Location = new System.Drawing.Point(273, 50);
+            this.panel_tare.Location = new System.Drawing.Point(349, 50);
             this.panel_tare.Name = "panel_tare";
-            this.panel_tare.Size = new System.Drawing.Size(135, 31);
+            this.panel_tare.Size = new System.Drawing.Size(131, 31);
             this.panel_tare.TabIndex = 25;
             // 
             // lbl_tare1
             // 
             this.lbl_tare1.AutoSize = true;
             this.lbl_tare1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_tare1.Location = new System.Drawing.Point(81, 6);
+            this.lbl_tare1.Location = new System.Drawing.Point(77, 11);
             this.lbl_tare1.Name = "lbl_tare1";
             this.lbl_tare1.Size = new System.Drawing.Size(51, 18);
             this.lbl_tare1.TabIndex = 24;
@@ -391,7 +397,7 @@ namespace rs232_Project
             // 
             this.lbl_tare.AutoSize = true;
             this.lbl_tare.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_tare.Location = new System.Drawing.Point(40, 6);
+            this.lbl_tare.Location = new System.Drawing.Point(41, 11);
             this.lbl_tare.Name = "lbl_tare";
             this.lbl_tare.Size = new System.Drawing.Size(0, 18);
             this.lbl_tare.TabIndex = 23;
@@ -428,15 +434,55 @@ namespace rs232_Project
             this.uDPToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
             this.uDPToolStripMenuItem.Text = "UDP";
             // 
+            // pnl_input
+            // 
+            this.pnl_input.BackColor = System.Drawing.Color.Tan;
+            this.pnl_input.Controls.Add(this.lbl_inputval);
+            this.pnl_input.Controls.Add(this.lbl_input);
+            this.pnl_input.Location = new System.Drawing.Point(43, 50);
+            this.pnl_input.Name = "pnl_input";
+            this.pnl_input.Size = new System.Drawing.Size(131, 31);
+            this.pnl_input.TabIndex = 27;
+            // 
+            // lbl_input
+            // 
+            this.lbl_input.AutoSize = true;
+            this.lbl_input.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_input.Location = new System.Drawing.Point(3, 12);
+            this.lbl_input.Name = "lbl_input";
+            this.lbl_input.Size = new System.Drawing.Size(39, 15);
+            this.lbl_input.TabIndex = 0;
+            this.lbl_input.Text = "input";
+            // 
+            // lbl_inputval
+            // 
+            this.lbl_inputval.AutoSize = true;
+            this.lbl_inputval.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_inputval.Location = new System.Drawing.Point(85, 9);
+            this.lbl_inputval.Name = "lbl_inputval";
+            this.lbl_inputval.Size = new System.Drawing.Size(0, 18);
+            this.lbl_inputval.TabIndex = 1;
+            // 
+            // lbl_output
+            // 
+            this.lbl_output.AutoSize = true;
+            this.lbl_output.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_output.Location = new System.Drawing.Point(3, 11);
+            this.lbl_output.Name = "lbl_output";
+            this.lbl_output.Size = new System.Drawing.Size(47, 15);
+            this.lbl_output.TabIndex = 28;
+            this.lbl_output.Text = "output";
+            // 
             // SerialConnection
             // 
             this.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.BackgroundImage = global::rs232_Project.Properties.Resources.deneme;
             this.ClientSize = new System.Drawing.Size(696, 400);
+            this.Controls.Add(this.pnl_input);
             this.Controls.Add(this.panel_tare);
             this.Controls.Add(this.panel_giris);
             this.Controls.Add(this.panel_kilo);
             this.Controls.Add(this.listbox_values);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.menuStrip1);
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "SerialConnection";
@@ -449,11 +495,12 @@ namespace rs232_Project
             this.panel_tare.PerformLayout();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.pnl_input.ResumeLayout(false);
+            this.pnl_input.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
             }
 
-
-        }
+    }
     }
