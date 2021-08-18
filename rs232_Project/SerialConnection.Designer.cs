@@ -77,11 +77,6 @@
         private System.Windows.Forms.ToolStripMenuItem uDPToolStripMenuItem;
         private System.Windows.Forms.Button btn_database;
         private System.Windows.Forms.Timer timer_disconnect;
-        private System.Windows.Forms.Label lbl_stabilornot;
-        private System.Windows.Forms.Panel pnl_input;
-        private System.Windows.Forms.Label lbl_inputval;
-        private System.Windows.Forms.Label lbl_input;
-        private System.Windows.Forms.Label lbl_output;
     }
 }
 
