@@ -82,6 +82,7 @@
         private System.Windows.Forms.Label lbl_inputval;
         private System.Windows.Forms.Label lbl_input;
         private System.Windows.Forms.Label lbl_output;
+        private System.Windows.Forms.Label lbl_stabil;
     }
 }
 
