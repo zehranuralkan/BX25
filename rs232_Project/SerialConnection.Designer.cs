@@ -62,7 +62,6 @@
         private System.Windows.Forms.Label lbl_datasize;
         private System.Windows.Forms.ComboBox cbx_datasize;
         private System.ComponentModel.BackgroundWorker backgroundWorker1;
-        private System.Windows.Forms.ListBox listbox_values;
         private System.Windows.Forms.Panel panel_giris;
         private System.Windows.Forms.Label lbl_weight;
         private System.Windows.Forms.Label lbl_kg;
@@ -83,6 +82,33 @@
         private System.Windows.Forms.Label lbl_input;
         private System.Windows.Forms.Label lbl_output;
         private System.Windows.Forms.Label lbl_stabil;
+        private System.Windows.Forms.DataGridView datagrid_values;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lbl_listinfo;
+        private System.Windows.Forms.Button btn_list;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Button btn_delete;
+        private System.Windows.Forms.TextBox tbx_serialid;
+        private System.Windows.Forms.Label lbl_serialid;
+        private System.Windows.Forms.Label lbl_deletedata;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Panel panel3;
+        private System.Windows.Forms.Label lbl_searchandupdate;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label lbl_changetare;
+        private System.Windows.Forms.Label lbl_weights;
+        private System.Windows.Forms.TextBox txt_changedatasizes;
+        private System.Windows.Forms.TextBox txt_changebauds;
+        private System.Windows.Forms.TextBox txt_changenames;
+        private System.Windows.Forms.Label lbl_changeid;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Button btn_update;
     }
 }
 
