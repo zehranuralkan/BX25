@@ -64,24 +64,21 @@ namespace rs232_Project
         {
             try
             {
-                int parse = value1.IndexOf(' ');
-                //lbl_weight.Text = value1.Substring(6, 9);
-
+                int parse = value1.IndexOf(' '); 
                 lbl_tare.Text = value1.Substring(11, 6);
-              lbl_inputval.Text= value1.Substring(4,2);
-                
+                lbl_inputval.Text = value1.Substring(4, 2);
             }
             catch
             {
             }
         }
-
         public void StabilOrNot(string value1)
         {
             byte[] ba = Encoding.Default.GetBytes(value1); ;
 
             var hexString = BitConverter.ToString(ba);
             hexString = hexString.Replace("-", "");
+
             string stb = hexString.Substring(4, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
             string bit3 = binaryval.Substring(2, 1);
@@ -94,10 +91,7 @@ namespace rs232_Project
             {
                 lbl_stabil.Text = " ";
             }
-
         }
-
-
         public void ShowPoint(string value1)
         {
             byte[] ba = Encoding.Default.GetBytes(value1);
@@ -105,19 +99,20 @@ namespace rs232_Project
             hexString = hexString.Replace("-", "");
             string stb = hexString.Substring(2, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-            string bit210 = binaryval.Substring(4, 3);
-            int parse = value1.IndexOf(' ');
             string value2 = value1.Substring(6, 4);
-
-             if (bit210 == "100")
+            if (binaryval.Length == 7)
             {
-                double new_value = (Convert.ToInt32(value2) * 0.01);
-                lbl_weight.Text = new_value.ToString();
+
+                string bit210 = binaryval.Substring(4, 3);
+
+                if (bit210 == "100")
+                {
+                    double new_value = (Convert.ToInt32(value2) * (0.01));
+                    lbl_weight.Text = new_value.ToString();
+                }
             }
-         
         }
-
-
+  
         private void DisplayText(object sender, EventArgs e)
         {
         }
@@ -137,7 +132,6 @@ namespace rs232_Project
             btn_database.Visible = false;
             Rs232_connection.serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived); //verileri alir
         }
-
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
 
@@ -147,7 +141,6 @@ namespace rs232_Project
             EthernetConnection ethernetcon = new EthernetConnection();
             this.Hide();
             ethernetcon.Show();
-
         }
         private void btn_database_Click(object sender, EventArgs e)
         {
@@ -156,7 +149,6 @@ namespace rs232_Project
             komut.ExecuteNonQuery();
             sqldata.Close();
         }
-
         private void btn_open_Click(object sender, EventArgs e)
         {
             if (cbx_serialname.Text != " " && cbx_boud.Text != " " && cbx_datasize.Text != "")
@@ -176,7 +168,6 @@ namespace rs232_Project
             }
             else MessageBox.Show("Gerekli alanları doldurunuz");
         }
-
         private void btn_disconnect_Click(object sender, EventArgs e)
         {
             serialPort.Close();
@@ -187,10 +178,9 @@ namespace rs232_Project
             lbl_weight.Text = " ";
             lbl_tare.Text = " ";
             lbl_inputval.Text = " ";
-
+            lbl_stabil.Text = " ";
         }
         SqlConnection sqldata = new SqlConnection("Data Source=emansuroglu; Initial Catalog=BX25_Project; User Id=sa; password=Baykon1987");
-
         public void CheckDatabase()
         {
             try
