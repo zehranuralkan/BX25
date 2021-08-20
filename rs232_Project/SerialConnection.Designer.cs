@@ -102,13 +102,19 @@
         private System.Windows.Forms.TextBox txt_changebauds;
         private System.Windows.Forms.TextBox txt_changenames;
         private System.Windows.Forms.Label lbl_changeid;
-        private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label lbl_updatetare;
+        private System.Windows.Forms.Label lbl_updateweight;
+        private System.Windows.Forms.Label lbl_updatedatasize;
+        private System.Windows.Forms.Label lbl_updatebauds;
+        private System.Windows.Forms.Label lbl_updatenames;
+        private System.Windows.Forms.Label lblserialidupdate;
         private System.Windows.Forms.Button btn_update;
+        private System.Windows.Forms.Label lbl_values;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.ImageList ımageList1;
+        private System.Windows.Forms.Label lbl_search;
+        private System.Windows.Forms.TextBox lbl_searchvalue;
     }
 }
 

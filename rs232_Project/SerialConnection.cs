@@ -107,10 +107,12 @@ namespace rs232_Project
 
                 if (bit210 == "100")
                 {
+                  
                     double new_value = (Convert.ToInt32(value2) * (0.01));
-                    lbl_weight.Text = new_value.ToString();
+                    lbl_weight.Text = new_value.ToString("0.00");
                 }
-            }
+
+            } 
         }
   
         private void DisplayText(object sender, EventArgs e)
@@ -131,6 +133,9 @@ namespace rs232_Project
             btn_disconnect.Visible = false;
             btn_database.Visible = false;
             lbl_listinfo.Visible = false;
+            lbl_search.Visible = false;
+            lbl_searchvalue.Visible = false;
+
 
             Rs232_connection.serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived); //verileri alir
         }
@@ -151,6 +156,7 @@ namespace rs232_Project
             command.ExecuteNonQuery();
            
             sqldata.Close();
+            ListData();
            
         }
         private void btn_list_Click(object sender, EventArgs e)
@@ -209,20 +215,21 @@ namespace rs232_Project
            
                 if (txt_changenames.Text != "" && txt_changebauds.Text != "" && txt_changedatasizes.Text != "")
                 {
-
                     sqldata.Open();
-                    SqlCommand command = new SqlCommand("update Serial set Names='" + txt_changenames.Text.ToString() + "',Bauds='" + txt_changebauds.Text.ToString() + "',DataSizes='" + txt_changedatasizes.Text.ToString() + "'", sqldata);
-                    command.ExecuteNonQuery();
-                    sqldata.Close();
-                    ListData();
-                    lbl_changeid.Text = "";
-                    txt_changenames.Clear();
-                    txt_changebauds.Clear();
-                    txt_changedatasizes.Clear();
-                    lbl_weights.Text = "";
-                    lbl_changetare.Text = "";
-                  
-                }
+                SqlCommand command = new SqlCommand("update Serial set Names=@Names, Bauds=@Bauds, DataSizes=@DataSizes where Serial_Id='"+ lbl_changeid .Text+ "'", sqldata);
+                command.Parameters.AddWithValue("@Names", txt_changenames.Text);
+                command.Parameters.AddWithValue("@Bauds", txt_changebauds.Text);
+                command.Parameters.AddWithValue("@DataSizes", txt_changedatasizes.Text);
+                command.ExecuteNonQuery();
+                sqldata.Close();
+                ListData();
+                lbl_changeid.Text = "";
+                txt_changenames.Clear();
+                txt_changebauds.Clear();
+                txt_changedatasizes.Clear();
+                lbl_weights.Text = "";
+                lbl_changetare.Text = "";
+            }
         }
 
         private void btn_delete_Click(object sender, EventArgs e)
@@ -264,8 +271,60 @@ namespace rs232_Project
             sqldata.Close();
 
         }
-      
+       
+        
+        DataTable dt;
+        private void lbl_searchvalue_TextChanged(object sender, EventArgs e)
+        {
 
+            sqldata.Open();
+            SqlDataAdapter adp = new SqlDataAdapter("select * from Serial where Weights like '" + lbl_searchvalue.Text + "%'", sqldata);
+            dt = new DataTable();
+            adp.Fill(dt);
+            datagrid_values.DataSource = dt;
+            sqldata.Close();
+        }
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            lblserialidupdate.Visible = false;
+            lbl_changeid.Visible = false;
+            lbl_updatenames.Visible = false;
+            txt_changenames.Visible = false;
+            lbl_updatebauds.Visible = false;
+            txt_changebauds.Visible = false;
+            lbl_updatedatasize.Visible = false;
+            txt_changedatasizes.Visible = false;
+            lbl_updateweight.Location = new Point(148, 56);
+            lbl_updatetare.Visible = false;
+            lbl_weights.Visible = false;
+            lbl_changetare.Visible = false;
+            btn_update.Visible = false;
+            lbl_search.Visible = true;
+            lbl_search.Location=new Point(15, 94);
+            lbl_searchvalue.Location=new Point(235, 57);
+            lbl_searchvalue.Visible = true;
+        }
+
+        private void pictureBox2_Click(object sender, EventArgs e)
+        {
+            lblserialidupdate.Visible = true;
+            lbl_changeid.Visible = true;
+            lbl_updatenames.Visible = true;
+            txt_changenames.Visible = true;
+            lbl_updatebauds.Visible = true;
+            lbl_updateweight.Location = new Point(148, 120);
+            txt_changebauds.Visible = true;
+            lbl_updatedatasize.Visible = true;
+            txt_changedatasizes.Visible = true;
+            lbl_updatetare.Visible = true;
+            lbl_weights.Visible = true;
+            lbl_changetare.Visible = true;
+            btn_update.Visible = true;
+            lbl_search.Visible = false;
+            lbl_searchvalue.Visible = false;
+         
+        }
+        
         private void uDPToolStripMenuItem_Click(object sender, EventArgs e)
             {
                 UdpConnection udpcon = new UdpConnection();
@@ -275,6 +334,7 @@ namespace rs232_Project
             private void InitializeComponent()
             {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialConnection));
             this.btn_open = new System.Windows.Forms.Button();
             this.serialPort = new System.IO.Ports.SerialPort(this.components);
             this.lbl_serialname = new System.Windows.Forms.Label();
@@ -311,26 +371,32 @@ namespace rs232_Project
             this.btn_list = new System.Windows.Forms.Button();
             this.panel2 = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
+            this.lbl_deletedata = new System.Windows.Forms.Label();
             this.btn_delete = new System.Windows.Forms.Button();
             this.tbx_serialid = new System.Windows.Forms.TextBox();
             this.lbl_serialid = new System.Windows.Forms.Label();
-            this.lbl_deletedata = new System.Windows.Forms.Label();
             this.panel3 = new System.Windows.Forms.Panel();
+            this.lbl_searchvalue = new System.Windows.Forms.TextBox();
+            this.lbl_search = new System.Windows.Forms.Label();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.btn_update = new System.Windows.Forms.Button();
+            this.lbl_searchandupdate = new System.Windows.Forms.Label();
             this.lbl_changetare = new System.Windows.Forms.Label();
             this.lbl_weights = new System.Windows.Forms.Label();
             this.txt_changedatasizes = new System.Windows.Forms.TextBox();
             this.txt_changebauds = new System.Windows.Forms.TextBox();
             this.txt_changenames = new System.Windows.Forms.TextBox();
             this.lbl_changeid = new System.Windows.Forms.Label();
-            this.label10 = new System.Windows.Forms.Label();
-            this.label9 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.lbl_searchandupdate = new System.Windows.Forms.Label();
+            this.lbl_updatetare = new System.Windows.Forms.Label();
+            this.lbl_updateweight = new System.Windows.Forms.Label();
+            this.lbl_updatedatasize = new System.Windows.Forms.Label();
+            this.lbl_updatebauds = new System.Windows.Forms.Label();
+            this.lbl_updatenames = new System.Windows.Forms.Label();
+            this.lblserialidupdate = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
+            this.lbl_values = new System.Windows.Forms.Label();
+            this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
             this.panel_giris.SuspendLayout();
             this.panel_kilo.SuspendLayout();
             this.panel_tare.SuspendLayout();
@@ -340,6 +406,8 @@ namespace rs232_Project
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_open
@@ -491,7 +559,7 @@ namespace rs232_Project
             this.panel_kilo.Controls.Add(this.lbl_stabilornot);
             this.panel_kilo.Controls.Add(this.lbl_kg);
             this.panel_kilo.Controls.Add(this.lbl_weight);
-            this.panel_kilo.Location = new System.Drawing.Point(12, 355);
+            this.panel_kilo.Location = new System.Drawing.Point(6, 380);
             this.panel_kilo.Name = "panel_kilo";
             this.panel_kilo.Size = new System.Drawing.Size(148, 31);
             this.panel_kilo.TabIndex = 23;
@@ -529,7 +597,7 @@ namespace rs232_Project
             this.panel_tare.BackColor = System.Drawing.Color.Wheat;
             this.panel_tare.Controls.Add(this.lbl_tare1);
             this.panel_tare.Controls.Add(this.lbl_tare);
-            this.panel_tare.Location = new System.Drawing.Point(12, 386);
+            this.panel_tare.Location = new System.Drawing.Point(6, 411);
             this.panel_tare.Name = "panel_tare";
             this.panel_tare.Size = new System.Drawing.Size(148, 31);
             this.panel_tare.TabIndex = 25;
@@ -590,7 +658,7 @@ namespace rs232_Project
             this.pnl_input.BackColor = System.Drawing.Color.Wheat;
             this.pnl_input.Controls.Add(this.lbl_inputval);
             this.pnl_input.Controls.Add(this.lbl_input);
-            this.pnl_input.Location = new System.Drawing.Point(12, 325);
+            this.pnl_input.Location = new System.Drawing.Point(6, 350);
             this.pnl_input.Name = "pnl_input";
             this.pnl_input.Size = new System.Drawing.Size(148, 31);
             this.pnl_input.TabIndex = 27;
@@ -618,7 +686,7 @@ namespace rs232_Project
             // 
             this.datagrid_values.BackgroundColor = System.Drawing.Color.AliceBlue;
             this.datagrid_values.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.datagrid_values.Location = new System.Drawing.Point(4, 32);
+            this.datagrid_values.Location = new System.Drawing.Point(3, 39);
             this.datagrid_values.Name = "datagrid_values";
             this.datagrid_values.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.datagrid_values.Size = new System.Drawing.Size(764, 178);
@@ -627,7 +695,7 @@ namespace rs232_Project
             // 
             // panel1
             // 
-            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
+            this.panel1.BackColor = System.Drawing.Color.AliceBlue;
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.lbl_listinfo);
@@ -642,8 +710,8 @@ namespace rs232_Project
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label2.ForeColor = System.Drawing.SystemColors.Info;
-            this.label2.Location = new System.Drawing.Point(326, -2);
+            this.label2.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label2.Location = new System.Drawing.Point(325, 0);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(115, 38);
             this.label2.TabIndex = 31;
@@ -661,7 +729,7 @@ namespace rs232_Project
             // 
             // btn_list
             // 
-            this.btn_list.Location = new System.Drawing.Point(688, 216);
+            this.btn_list.Location = new System.Drawing.Point(688, 221);
             this.btn_list.Name = "btn_list";
             this.btn_list.Size = new System.Drawing.Size(79, 26);
             this.btn_list.TabIndex = 29;
@@ -671,30 +739,43 @@ namespace rs232_Project
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.Color.AliceBlue;
+            this.panel2.BackColor = System.Drawing.Color.PowderBlue;
             this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.panel2.Controls.Add(this.label3);
+            this.panel2.Controls.Add(this.lbl_deletedata);
             this.panel2.Controls.Add(this.btn_delete);
             this.panel2.Controls.Add(this.tbx_serialid);
             this.panel2.Controls.Add(this.lbl_serialid);
-            this.panel2.Location = new System.Drawing.Point(187, 309);
+            this.panel2.Location = new System.Drawing.Point(187, 292);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(299, 141);
+            this.panel2.Size = new System.Drawing.Size(299, 166);
             this.panel2.TabIndex = 30;
             // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label3.Location = new System.Drawing.Point(3, 106);
+            this.label3.Location = new System.Drawing.Point(3, 123);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(294, 13);
             this.label3.TabIndex = 4;
             this.label3.Text = "NOTE: Enter the id of the data you want to delete.";
             // 
+            // lbl_deletedata
+            // 
+            this.lbl_deletedata.AutoSize = true;
+            this.lbl_deletedata.BackColor = System.Drawing.Color.PowderBlue;
+            this.lbl_deletedata.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_deletedata.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lbl_deletedata.Location = new System.Drawing.Point(68, 0);
+            this.lbl_deletedata.Name = "lbl_deletedata";
+            this.lbl_deletedata.Size = new System.Drawing.Size(153, 38);
+            this.lbl_deletedata.TabIndex = 0;
+            this.lbl_deletedata.Text = "DATA DELETE";
+            // 
             // btn_delete
             // 
-            this.btn_delete.Location = new System.Drawing.Point(137, 66);
+            this.btn_delete.Location = new System.Drawing.Point(138, 90);
             this.btn_delete.Name = "btn_delete";
             this.btn_delete.Size = new System.Drawing.Size(83, 22);
             this.btn_delete.TabIndex = 3;
@@ -704,7 +785,7 @@ namespace rs232_Project
             // 
             // tbx_serialid
             // 
-            this.tbx_serialid.Location = new System.Drawing.Point(137, 35);
+            this.tbx_serialid.Location = new System.Drawing.Point(138, 59);
             this.tbx_serialid.Name = "tbx_serialid";
             this.tbx_serialid.Size = new System.Drawing.Size(83, 20);
             this.tbx_serialid.TabIndex = 2;
@@ -713,49 +794,84 @@ namespace rs232_Project
             // 
             this.lbl_serialid.AutoSize = true;
             this.lbl_serialid.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_serialid.Location = new System.Drawing.Point(61, 37);
+            this.lbl_serialid.Location = new System.Drawing.Point(62, 61);
             this.lbl_serialid.Name = "lbl_serialid";
             this.lbl_serialid.Size = new System.Drawing.Size(60, 16);
             this.lbl_serialid.TabIndex = 1;
             this.lbl_serialid.Text = "Serial Id:";
             // 
-            // lbl_deletedata
-            // 
-            this.lbl_deletedata.AutoSize = true;
-            this.lbl_deletedata.BackColor = System.Drawing.Color.AliceBlue;
-            this.lbl_deletedata.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_deletedata.ForeColor = System.Drawing.SystemColors.WindowFrame;
-            this.lbl_deletedata.Location = new System.Drawing.Point(254, 289);
-            this.lbl_deletedata.Name = "lbl_deletedata";
-            this.lbl_deletedata.Size = new System.Drawing.Size(153, 38);
-            this.lbl_deletedata.TabIndex = 0;
-            this.lbl_deletedata.Text = "DATA DELETE";
-            // 
             // panel3
             // 
             this.panel3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.panel3.Controls.Add(this.lbl_searchvalue);
+            this.panel3.Controls.Add(this.lbl_search);
+            this.panel3.Controls.Add(this.pictureBox2);
+            this.panel3.Controls.Add(this.pictureBox1);
             this.panel3.Controls.Add(this.btn_update);
+            this.panel3.Controls.Add(this.lbl_searchandupdate);
             this.panel3.Controls.Add(this.lbl_changetare);
             this.panel3.Controls.Add(this.lbl_weights);
             this.panel3.Controls.Add(this.txt_changedatasizes);
             this.panel3.Controls.Add(this.txt_changebauds);
             this.panel3.Controls.Add(this.txt_changenames);
             this.panel3.Controls.Add(this.lbl_changeid);
-            this.panel3.Controls.Add(this.label10);
-            this.panel3.Controls.Add(this.label9);
-            this.panel3.Controls.Add(this.label8);
-            this.panel3.Controls.Add(this.label7);
-            this.panel3.Controls.Add(this.label6);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Location = new System.Drawing.Point(501, 309);
+            this.panel3.Controls.Add(this.lbl_updatetare);
+            this.panel3.Controls.Add(this.lbl_updateweight);
+            this.panel3.Controls.Add(this.lbl_updatedatasize);
+            this.panel3.Controls.Add(this.lbl_updatebauds);
+            this.panel3.Controls.Add(this.lbl_updatenames);
+            this.panel3.Controls.Add(this.lblserialidupdate);
+            this.panel3.Location = new System.Drawing.Point(501, 292);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(461, 141);
+            this.panel3.Size = new System.Drawing.Size(461, 166);
             this.panel3.TabIndex = 31;
+            // 
+            // lbl_searchvalue
+            // 
+            this.lbl_searchvalue.Location = new System.Drawing.Point(332, 124);
+            this.lbl_searchvalue.Name = "lbl_searchvalue";
+            this.lbl_searchvalue.Size = new System.Drawing.Size(100, 20);
+            this.lbl_searchvalue.TabIndex = 17;
+            this.lbl_searchvalue.TextChanged += new System.EventHandler(this.lbl_searchvalue_TextChanged);
+            // 
+            // lbl_search
+            // 
+            this.lbl_search.AutoSize = true;
+            this.lbl_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_search.Location = new System.Drawing.Point(15, 35);
+            this.lbl_search.Name = "lbl_search";
+            this.lbl_search.Size = new System.Drawing.Size(431, 18);
+            this.lbl_search.TabIndex = 15;
+            this.lbl_search.Text = "NOTE:Please enter the weight value you want to search.";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.ErrorImage")));
+            this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
+            this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
+            this.pictureBox2.Location = new System.Drawing.Point(60, 5);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(29, 30);
+            this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox2.TabIndex = 14;
+            this.pictureBox2.TabStop = false;
+            this.pictureBox2.Click += new System.EventHandler(this.pictureBox2_Click);
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.Image = global::rs232_Project.Properties.Resources.magnifying_glass;
+            this.pictureBox1.Location = new System.Drawing.Point(361, 5);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(29, 30);
+            this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictureBox1.TabIndex = 13;
+            this.pictureBox1.TabStop = false;
+            this.pictureBox1.Click += new System.EventHandler(this.pictureBox1_Click);
             // 
             // btn_update
             // 
-            this.btn_update.Location = new System.Drawing.Point(382, 106);
+            this.btn_update.Location = new System.Drawing.Point(202, 142);
             this.btn_update.Name = "btn_update";
             this.btn_update.Size = new System.Drawing.Size(71, 21);
             this.btn_update.TabIndex = 12;
@@ -763,41 +879,50 @@ namespace rs232_Project
             this.btn_update.UseVisualStyleBackColor = true;
             this.btn_update.Click += new System.EventHandler(this.btn_update_Click);
             // 
+            // lbl_searchandupdate
+            // 
+            this.lbl_searchandupdate.AutoSize = true;
+            this.lbl_searchandupdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.lbl_searchandupdate.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_searchandupdate.Location = new System.Drawing.Point(95, 0);
+            this.lbl_searchandupdate.Name = "lbl_searchandupdate";
+            this.lbl_searchandupdate.Size = new System.Drawing.Size(260, 38);
+            this.lbl_searchandupdate.TabIndex = 0;
+            this.lbl_searchandupdate.Text = "DATA UPDATE- SEARCH";
+            // 
             // lbl_changetare
             // 
             this.lbl_changetare.AutoSize = true;
-            this.lbl_changetare.Location = new System.Drawing.Point(350, 86);
+            this.lbl_changetare.Location = new System.Drawing.Point(307, 126);
             this.lbl_changetare.Name = "lbl_changetare";
-            this.lbl_changetare.Size = new System.Drawing.Size(41, 13);
+            this.lbl_changetare.Size = new System.Drawing.Size(0, 13);
             this.lbl_changetare.TabIndex = 11;
-            this.lbl_changetare.Text = "label11";
             // 
             // lbl_weights
             // 
             this.lbl_weights.AutoSize = true;
-            this.lbl_weights.Location = new System.Drawing.Point(350, 58);
+            this.lbl_weights.Location = new System.Drawing.Point(232, 126);
             this.lbl_weights.Name = "lbl_weights";
-            this.lbl_weights.Size = new System.Drawing.Size(41, 13);
+            this.lbl_weights.Size = new System.Drawing.Size(0, 13);
             this.lbl_weights.TabIndex = 10;
-            this.lbl_weights.Text = "label11";
             // 
             // txt_changedatasizes
             // 
-            this.txt_changedatasizes.Location = new System.Drawing.Point(353, 19);
+            this.txt_changedatasizes.Location = new System.Drawing.Point(235, 103);
             this.txt_changedatasizes.Name = "txt_changedatasizes";
             this.txt_changedatasizes.Size = new System.Drawing.Size(100, 20);
             this.txt_changedatasizes.TabIndex = 9;
             // 
             // txt_changebauds
             // 
-            this.txt_changebauds.Location = new System.Drawing.Point(108, 89);
+            this.txt_changebauds.Location = new System.Drawing.Point(235, 81);
             this.txt_changebauds.Name = "txt_changebauds";
             this.txt_changebauds.Size = new System.Drawing.Size(100, 20);
             this.txt_changebauds.TabIndex = 8;
             // 
             // txt_changenames
             // 
-            this.txt_changenames.Location = new System.Drawing.Point(108, 58);
+            this.txt_changenames.Location = new System.Drawing.Point(235, 57);
             this.txt_changenames.Name = "txt_changenames";
             this.txt_changenames.Size = new System.Drawing.Size(100, 20);
             this.txt_changenames.TabIndex = 7;
@@ -805,82 +930,70 @@ namespace rs232_Project
             // lbl_changeid
             // 
             this.lbl_changeid.AutoSize = true;
-            this.lbl_changeid.Location = new System.Drawing.Point(105, 26);
+            this.lbl_changeid.Location = new System.Drawing.Point(232, 40);
             this.lbl_changeid.Name = "lbl_changeid";
-            this.lbl_changeid.Size = new System.Drawing.Size(41, 13);
+            this.lbl_changeid.Size = new System.Drawing.Size(0, 13);
             this.lbl_changeid.TabIndex = 6;
-            this.lbl_changeid.Text = "label11";
             // 
-            // label10
+            // lbl_updatetare
             // 
-            this.label10.AutoSize = true;
-            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label10.Location = new System.Drawing.Point(264, 82);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(38, 18);
-            this.label10.TabIndex = 5;
-            this.label10.Text = "Tare";
+            this.lbl_updatetare.AutoSize = true;
+            this.lbl_updatetare.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_updatetare.Location = new System.Drawing.Point(275, 123);
+            this.lbl_updatetare.Name = "lbl_updatetare";
+            this.lbl_updatetare.Size = new System.Drawing.Size(42, 18);
+            this.lbl_updatetare.TabIndex = 5;
+            this.lbl_updatetare.Text = "Tare:";
             // 
-            // label9
+            // lbl_updateweight
             // 
-            this.label9.AutoSize = true;
-            this.label9.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label9.Location = new System.Drawing.Point(264, 53);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(62, 18);
-            this.label9.TabIndex = 4;
-            this.label9.Text = "Weights";
+            this.lbl_updateweight.AutoSize = true;
+            this.lbl_updateweight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_updateweight.Location = new System.Drawing.Point(148, 120);
+            this.lbl_updateweight.Name = "lbl_updateweight";
+            this.lbl_updateweight.Size = new System.Drawing.Size(66, 18);
+            this.lbl_updateweight.TabIndex = 4;
+            this.lbl_updateweight.Text = "Weights:";
             // 
-            // label8
+            // lbl_updatedatasize
             // 
-            this.label8.AutoSize = true;
-            this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label8.Location = new System.Drawing.Point(264, 16);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(76, 18);
-            this.label8.TabIndex = 3;
-            this.label8.Text = "DataSizes";
+            this.lbl_updatedatasize.AutoSize = true;
+            this.lbl_updatedatasize.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_updatedatasize.Location = new System.Drawing.Point(148, 102);
+            this.lbl_updatedatasize.Name = "lbl_updatedatasize";
+            this.lbl_updatedatasize.Size = new System.Drawing.Size(84, 18);
+            this.lbl_updatedatasize.TabIndex = 3;
+            this.lbl_updatedatasize.Text = "Data Sizes:";
             // 
-            // label7
+            // lbl_updatebauds
             // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label7.Location = new System.Drawing.Point(21, 89);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(50, 18);
-            this.label7.TabIndex = 2;
-            this.label7.Text = "Bauds";
+            this.lbl_updatebauds.AutoSize = true;
+            this.lbl_updatebauds.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_updatebauds.Location = new System.Drawing.Point(148, 81);
+            this.lbl_updatebauds.Name = "lbl_updatebauds";
+            this.lbl_updatebauds.Size = new System.Drawing.Size(54, 18);
+            this.lbl_updatebauds.TabIndex = 2;
+            this.lbl_updatebauds.Text = "Bauds:";
             // 
-            // label6
+            // lbl_updatenames
             // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label6.Location = new System.Drawing.Point(16, 58);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(56, 18);
-            this.label6.TabIndex = 1;
-            this.label6.Text = "Names";
+            this.lbl_updatenames.AutoSize = true;
+            this.lbl_updatenames.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_updatenames.Location = new System.Drawing.Point(148, 56);
+            this.lbl_updatenames.Name = "lbl_updatenames";
+            this.lbl_updatenames.Size = new System.Drawing.Size(60, 18);
+            this.lbl_updatenames.TabIndex = 1;
+            this.lbl_updatenames.Text = "Names:";
             // 
-            // label5
+            // lblserialidupdate
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.label5.Location = new System.Drawing.Point(16, 24);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(60, 18);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "Serial Id";
-            // 
-            // lbl_searchandupdate
-            // 
-            this.lbl_searchandupdate.AutoSize = true;
-            this.lbl_searchandupdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.lbl_searchandupdate.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_searchandupdate.Location = new System.Drawing.Point(616, 289);
-            this.lbl_searchandupdate.Name = "lbl_searchandupdate";
-            this.lbl_searchandupdate.Size = new System.Drawing.Size(260, 38);
-            this.lbl_searchandupdate.TabIndex = 0;
-            this.lbl_searchandupdate.Text = "DATA SEARCH -UPDATE";
+            this.lblserialidupdate.AutoSize = true;
+            this.lblserialidupdate.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lblserialidupdate.Location = new System.Drawing.Point(148, 38);
+            this.lblserialidupdate.Name = "lblserialidupdate";
+            this.lblserialidupdate.Size = new System.Drawing.Size(64, 18);
+            this.lblserialidupdate.TabIndex = 0;
+            this.lblserialidupdate.Text = "Serial Id:";
             // 
             // label4
             // 
@@ -893,14 +1006,30 @@ namespace rs232_Project
             this.label4.TabIndex = 32;
             this.label4.Text = "SERIAL";
             // 
+            // lbl_values
+            // 
+            this.lbl_values.AutoSize = true;
+            this.lbl_values.BackColor = System.Drawing.Color.Wheat;
+            this.lbl_values.Font = new System.Drawing.Font("Mistral", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_values.Location = new System.Drawing.Point(48, 330);
+            this.lbl_values.Name = "lbl_values";
+            this.lbl_values.Size = new System.Drawing.Size(72, 29);
+            this.lbl_values.TabIndex = 33;
+            this.lbl_values.Text = "VALUES";
+            // 
+            // ımageList1
+            // 
+            this.ımageList1.ColorDepth = System.Windows.Forms.ColorDepth.Depth8Bit;
+            this.ımageList1.ImageSize = new System.Drawing.Size(16, 16);
+            this.ımageList1.TransparentColor = System.Drawing.Color.Transparent;
+            // 
             // SerialConnection
             // 
             this.BackColor = System.Drawing.Color.WhiteSmoke;
             this.BackgroundImage = global::rs232_Project.Properties.Resources.deneme;
-            this.ClientSize = new System.Drawing.Size(976, 448);
+            this.ClientSize = new System.Drawing.Size(976, 458);
+            this.Controls.Add(this.lbl_values);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.lbl_deletedata);
-            this.Controls.Add(this.lbl_searchandupdate);
             this.Controls.Add(this.panel3);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
@@ -930,11 +1059,13 @@ namespace rs232_Project
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
             }
 
-      
+       
     }
     }
