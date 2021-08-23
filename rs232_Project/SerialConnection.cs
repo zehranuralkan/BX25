@@ -27,10 +27,12 @@ namespace rs232_Project
                 {
                     value = Rs232_connection.serialPort.ReadLine();
                     Control.CheckForIllegalCrossThreadCalls = false;
-                  //  listbox_values.Items.Add(value);
+                    //  listbox_values.Items.Add(value);
                     CheckParse(value);
                     StabilOrNot(value);
-                    ShowPoint(value);
+                    //string negativevalue = value.Substring(0,9);
+                    PositiveOrNegative(value);
+                    ShowPoint(value.Substring(0,2));
                     lbl_kg.Text = "KG";
                     lbl_tare1.Text = "TARE";
                 }
@@ -78,18 +80,34 @@ namespace rs232_Project
             byte[] ba = Encoding.Default.GetBytes(value1); ;
 
             var hexString = BitConverter.ToString(ba);
-            hexString = hexString.Replace("-", "");  
+            hexString = hexString.Replace("-", "");
             string stb = hexString.Substring(4, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-            string bit3 = binaryval.Substring(2, 1);
-
-            if (bit3 == "1")
+            if (binaryval.Length == 7)
             {
-                lbl_stabil.Text = "~";
+                string bit3 = binaryval.Substring(2, 1);
+                if (bit3 == "1")
+                {
+                    lbl_stabil.Text = "~";
+                }
+                else
+                {
+                    lbl_stabil.Text = " ";
+                }
             }
             else
             {
-                lbl_stabil.Text = " ";
+                string newbinary = binaryval + "0";
+                string bit3 = newbinary.Substring(2, 1);
+                if (bit3 == "1")
+                {
+                    lbl_stabil.Text = "~";
+                }
+                else
+                {
+                    lbl_stabil.Text = " ";
+                }
+
             }
         }
         public void ShowPoint(string value1)
@@ -102,19 +120,50 @@ namespace rs232_Project
             string value2 = value1.Substring(6, 4);
             if (binaryval.Length == 7)
             {
-
+              
                 string bit210 = binaryval.Substring(4, 3);
-
                 if (bit210 == "100")
                 {
-                  
                     double new_value = (Convert.ToInt32(value2) * (0.01));
                     lbl_weight.Text = new_value.ToString("0.00");
                 }
+            }
+            else
+            {
 
-            } 
+                string newbinary = binaryval + "0";
+              
+                string bit210 = newbinary.Substring(4, 3);
+                if (bit210 == "100")
+                {
+                    double new_value = (Convert.ToInt32(value2) * (0.01));
+                    lbl_weight.Text = new_value.ToString("0.00");
+                }
+            }
         }
-  
+
+
+        public void PositiveOrNegative(string value1)
+        {
+            string test = value1.Substring(1, 3);
+            byte[] ba = Encoding.Default.GetBytes(test);
+            var hexString = BitConverter.ToString(ba);
+            hexString = hexString.Replace("-", "");
+            string stb = hexString.Substring(4, 2);
+            string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
+            string bit1 = binaryval.Substring(4, 1);
+
+            if (bit1 == "1")
+            {
+
+            }
+            else
+            {
+
+            }
+        }
+
+
         private void DisplayText(object sender, EventArgs e)
         {
         }
@@ -766,7 +815,7 @@ namespace rs232_Project
             this.lbl_deletedata.AutoSize = true;
             this.lbl_deletedata.BackColor = System.Drawing.Color.PowderBlue;
             this.lbl_deletedata.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_deletedata.ForeColor = System.Drawing.SystemColors.WindowFrame;
+            this.lbl_deletedata.ForeColor = System.Drawing.SystemColors.ControlText;
             this.lbl_deletedata.Location = new System.Drawing.Point(68, 0);
             this.lbl_deletedata.Name = "lbl_deletedata";
             this.lbl_deletedata.Size = new System.Drawing.Size(153, 38);
@@ -838,10 +887,10 @@ namespace rs232_Project
             // lbl_search
             // 
             this.lbl_search.AutoSize = true;
-            this.lbl_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lbl_search.Location = new System.Drawing.Point(15, 35);
             this.lbl_search.Name = "lbl_search";
-            this.lbl_search.Size = new System.Drawing.Size(431, 18);
+            this.lbl_search.Size = new System.Drawing.Size(393, 16);
             this.lbl_search.TabIndex = 15;
             this.lbl_search.Text = "NOTE:Please enter the weight value you want to search.";
             // 
@@ -850,7 +899,7 @@ namespace rs232_Project
             this.pictureBox2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.ErrorImage")));
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
-            this.pictureBox2.Location = new System.Drawing.Point(60, 5);
+            this.pictureBox2.Location = new System.Drawing.Point(97, 3);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(29, 30);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -861,7 +910,7 @@ namespace rs232_Project
             // pictureBox1
             // 
             this.pictureBox1.Image = global::rs232_Project.Properties.Resources.magnifying_glass;
-            this.pictureBox1.Location = new System.Drawing.Point(361, 5);
+            this.pictureBox1.Location = new System.Drawing.Point(332, 3);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(29, 30);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -884,11 +933,11 @@ namespace rs232_Project
             this.lbl_searchandupdate.AutoSize = true;
             this.lbl_searchandupdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.lbl_searchandupdate.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_searchandupdate.Location = new System.Drawing.Point(95, 0);
+            this.lbl_searchandupdate.Location = new System.Drawing.Point(118, 0);
             this.lbl_searchandupdate.Name = "lbl_searchandupdate";
-            this.lbl_searchandupdate.Size = new System.Drawing.Size(260, 38);
+            this.lbl_searchandupdate.Size = new System.Drawing.Size(208, 38);
             this.lbl_searchandupdate.TabIndex = 0;
-            this.lbl_searchandupdate.Text = "DATA UPDATE- SEARCH";
+            this.lbl_searchandupdate.Text = " UPDATE- SEARCH";
             // 
             // lbl_changetare
             // 
