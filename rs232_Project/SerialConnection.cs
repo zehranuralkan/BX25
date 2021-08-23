@@ -27,12 +27,10 @@ namespace rs232_Project
                 {
                     value = Rs232_connection.serialPort.ReadLine();
                     Control.CheckForIllegalCrossThreadCalls = false;
-                    //  listbox_values.Items.Add(value);
                     CheckParse(value);
                     StabilOrNot(value);
-                    //string negativevalue = value.Substring(0,9);
+                    ShowPoint(value);
                     PositiveOrNegative(value);
-                    ShowPoint(value.Substring(0,2));
                     lbl_kg.Text = "KG";
                     lbl_tare1.Text = "TARE";
                 }
@@ -52,10 +50,7 @@ namespace rs232_Project
                 {
                     MessageBox.Show("Format Exception");
                 }
-                catch (InvalidOperationException)
-                {
-                    MessageBox.Show("Invalid Operation Exception");
-                }
+              
                 catch (IndexOutOfRangeException)
                 {
                     MessageBox.Show("Index Out Of Range Exception");
@@ -63,7 +58,6 @@ namespace rs232_Project
             }  
         }
         private void CheckParse(string value1)
-        //deger'i 6 bit ayirma islemi
         {
             try
             {
@@ -80,7 +74,7 @@ namespace rs232_Project
             byte[] ba = Encoding.Default.GetBytes(value1); ;
 
             var hexString = BitConverter.ToString(ba);
-            hexString = hexString.Replace("-", "");
+            hexString = hexString.Replace("-", "");   
             string stb = hexString.Substring(4, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
             if (binaryval.Length == 7)
@@ -107,7 +101,6 @@ namespace rs232_Project
                 {
                     lbl_stabil.Text = " ";
                 }
-
             }
         }
         public void ShowPoint(string value1)
@@ -117,22 +110,21 @@ namespace rs232_Project
             hexString = hexString.Replace("-", "");
             string stb = hexString.Substring(2, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-            string value2 = value1.Substring(6, 4);
-            if (binaryval.Length == 7)
-            {
-              
-                string bit210 = binaryval.Substring(4, 3);
-                if (bit210 == "100")
+                if (binaryval.Length == 7)
                 {
-                    double new_value = (Convert.ToInt32(value2) * (0.01));
-                    lbl_weight.Text = new_value.ToString("0.00");
+                string value2 = value1.Substring(6, 4);
+                string bit210 = binaryval.Substring(4, 3);
+                    if (bit210 == "100")
+                    {
+                        double new_value = (Convert.ToInt32(value2) * (0.01));
+                        lbl_weight.Text = new_value.ToString("0.00");
+                    }
                 }
-            }
             else
             {
-
+               
                 string newbinary = binaryval + "0";
-              
+                string value2 = value1.Substring(0, 4);
                 string bit210 = newbinary.Substring(4, 3);
                 if (bit210 == "100")
                 {
@@ -142,31 +134,41 @@ namespace rs232_Project
             }
         }
 
-
         public void PositiveOrNegative(string value1)
         {
             string test = value1.Substring(1, 3);
             byte[] ba = Encoding.Default.GetBytes(test);
             var hexString = BitConverter.ToString(ba);
             hexString = hexString.Replace("-", "");
-            string stb = hexString.Substring(4, 2);
+            string stb = hexString.Substring(0, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-            string bit1 = binaryval.Substring(4, 1);
-
-            if (bit1 == "1")
+            if (binaryval.Length == 7)
             {
+                string bit1 = binaryval.Substring(4, 1);
+                if (bit1 == "1")
+                {
 
+                }
+                else
+                {
+
+                }
             }
             else
             {
-
+                string newbinary = binaryval + "0";
+                string value2 = newbinary.Substring(5, 1);
+                if(value2=="0")
+                {
+                    string yeni =(Convert.ToInt32 (value2) * (-1)).ToString();   
+                }
             }
         }
-
 
         private void DisplayText(object sender, EventArgs e)
         {
         }
+
         public void ComboboxData()
         {
             string[] ports = SerialPort.GetPortNames(); // port isimlerini al
@@ -175,6 +177,7 @@ namespace rs232_Project
                 cbx_serialname.Items.Add(port);
             }
         }
+
         private void Form1_Load_1(object sender, EventArgs e)
         {
             ComboboxData();
@@ -184,45 +187,43 @@ namespace rs232_Project
             lbl_listinfo.Visible = false;
             lbl_search.Visible = false;
             lbl_searchvalue.Visible = false;
-
-
             Rs232_connection.serialPort.DataReceived += new SerialDataReceivedEventHandler(serialPort_DataReceived); //verileri alir
         }
+
         private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
         {
 
         }
+
         private void tCPClientToolStripMenuItem_Click(object sender, EventArgs e)
         {
             EthernetConnection ethernetcon = new EthernetConnection();
             this.Hide();
             ethernetcon.Show();
         }
+
         private void btn_database_Click(object sender, EventArgs e)
         {
             CheckDatabase();
             SqlCommand command = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare,Input,isStabil) values ('" + cbx_serialname.Text.ToString() + "','" + cbx_boud.Text.ToString() + "','" +cbx_datasize.Text.ToString() + "','" + lbl_weight.Text+"','" + lbl_tare.Text+"','" + lbl_inputval.Text + "','"+lbl_stabil.Text+"')", sqldata);
             command.ExecuteNonQuery();
-           
             sqldata.Close();
             ListData();
-           
         }
+
         private void btn_list_Click(object sender, EventArgs e)
         {
             ListData();
         }
+
         private void btn_open_Click(object sender, EventArgs e)
         {
-            if (cbx_serialname.Text != " " && cbx_boud.Text != " " && cbx_datasize.Text != "")
+            if (cbx_serialname.Text != " " && cbx_boud.Text != " " && cbx_datasize.Text != "") //// blank value input denied
             {
-                //bos deger girilmesi engellendi
                 if (Convert.ToInt32(cbx_datasize.Text) == 8)
                 {
-                    Rs232_connection.PortOpen(cbx_serialname.Text, Convert.ToInt32(cbx_boud.Text)); //kulanilacak port
+                    Rs232_connection.PortOpen(cbx_serialname.Text, Convert.ToInt32(cbx_boud.Text)); //port to be used
                     serialPort.PortName = cbx_serialname.SelectedItem.ToString();
-                    //listbox_degerler.Items.Add("Serial port " +" " + cbx_serialname.Text.ToString() +" "+ "opened");
-                    //serialPort.Open();
                     backgroundWorker1.RunWorkerAsync();
                     btn_open.Visible = false;
                     btn_disconnect.Visible = true;
@@ -237,7 +238,6 @@ namespace rs232_Project
         private void btn_disconnect_Click(object sender, EventArgs e)
         {
             serialPort.Close();
-          //  listbox_values.Items.Clear();
             btn_open.Visible = true;
             btn_disconnect.Visible = false;
             btn_database.Visible = false;
@@ -246,8 +246,6 @@ namespace rs232_Project
             lbl_inputval.Text = " ";
             lbl_stabil.Text = " ";
             lbl_listinfo.Text = " ";
-          
-           
         }
         int id = 1;
         private void datagrid_values_MouseClick(object sender, MouseEventArgs e)
@@ -261,23 +259,22 @@ namespace rs232_Project
         }
         private void btn_update_Click(object sender, EventArgs e)
         {
-           
-                if (txt_changenames.Text != "" && txt_changebauds.Text != "" && txt_changedatasizes.Text != "")
-                {
-                    sqldata.Open();
-                SqlCommand command = new SqlCommand("update Serial set Names=@Names, Bauds=@Bauds, DataSizes=@DataSizes where Serial_Id='"+ lbl_changeid .Text+ "'", sqldata);
-                command.Parameters.AddWithValue("@Names", txt_changenames.Text);
-                command.Parameters.AddWithValue("@Bauds", txt_changebauds.Text);
-                command.Parameters.AddWithValue("@DataSizes", txt_changedatasizes.Text);
-                command.ExecuteNonQuery();
-                sqldata.Close();
-                ListData();
-                lbl_changeid.Text = "";
-                txt_changenames.Clear();
-                txt_changebauds.Clear();
-                txt_changedatasizes.Clear();
-                lbl_weights.Text = "";
-                lbl_changetare.Text = "";
+            if (txt_changenames.Text != "" && txt_changebauds.Text != "" && txt_changedatasizes.Text != "")
+            {
+               sqldata.Open();
+               SqlCommand command = new SqlCommand("update Serial set Names=@Names, Bauds=@Bauds, DataSizes=@DataSizes where Serial_Id='"+ lbl_changeid .Text+ "'", sqldata);
+               command.Parameters.AddWithValue("@Names", txt_changenames.Text);
+               command.Parameters.AddWithValue("@Bauds", txt_changebauds.Text);
+               command.Parameters.AddWithValue("@DataSizes", txt_changedatasizes.Text);
+               command.ExecuteNonQuery();
+               sqldata.Close();
+               ListData();
+               lbl_changeid.Text = "";
+               txt_changenames.Clear();
+               txt_changebauds.Clear();
+               txt_changedatasizes.Clear();
+               lbl_weights.Text = "";
+               lbl_changetare.Text = "";
             }
         }
 
@@ -292,16 +289,17 @@ namespace rs232_Project
                 ListData();
                 sqldata.Close();
             }
+
             else
                 MessageBox.Show("Please enter the id.");
         }
+
         SqlConnection sqldata = new SqlConnection("Data Source=emansuroglu; Initial Catalog=BX25_Project; User Id=sa; password=Baykon1987");
         public void CheckDatabase()
         {
             try
             {
                 sqldata.Open();
-             
             }
             catch (SqlException)
             {
@@ -310,22 +308,17 @@ namespace rs232_Project
         }
         public void ListData()
         {
-          
-            //sqldata.Open();
             string sql = "select * from Serial";
             SqlDataAdapter adp = new SqlDataAdapter(sql, sqldata);
             DataSet ds = new DataSet(); 
             adp.Fill(ds); 
             datagrid_values.DataSource = ds.Tables[0];
             sqldata.Close();
-
         }
-       
-        
+
         DataTable dt;
         private void lbl_searchvalue_TextChanged(object sender, EventArgs e)
         {
-
             sqldata.Open();
             SqlDataAdapter adp = new SqlDataAdapter("select * from Serial where Weights like '" + lbl_searchvalue.Text + "%'", sqldata);
             dt = new DataTable();
@@ -333,6 +326,7 @@ namespace rs232_Project
             datagrid_values.DataSource = dt;
             sqldata.Close();
         }
+
         private void pictureBox1_Click(object sender, EventArgs e)
         {
             lblserialidupdate.Visible = false;
@@ -371,17 +365,17 @@ namespace rs232_Project
             btn_update.Visible = true;
             lbl_search.Visible = false;
             lbl_searchvalue.Visible = false;
-         
         }
-        
+
         private void uDPToolStripMenuItem_Click(object sender, EventArgs e)
-            {
+        {
                 UdpConnection udpcon = new UdpConnection();
                 this.Hide();
                 udpcon.Show();
-            }
-            private void InitializeComponent()
-            {
+        }
+
+        private void InitializeComponent()
+        {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SerialConnection));
             this.btn_open = new System.Windows.Forms.Button();
@@ -736,6 +730,7 @@ namespace rs232_Project
             this.datagrid_values.BackgroundColor = System.Drawing.Color.AliceBlue;
             this.datagrid_values.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagrid_values.Location = new System.Drawing.Point(3, 39);
+            this.datagrid_values.MultiSelect = false;
             this.datagrid_values.Name = "datagrid_values";
             this.datagrid_values.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.datagrid_values.Size = new System.Drawing.Size(764, 178);
@@ -887,10 +882,10 @@ namespace rs232_Project
             // lbl_search
             // 
             this.lbl_search.AutoSize = true;
-            this.lbl_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_search.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
             this.lbl_search.Location = new System.Drawing.Point(15, 35);
             this.lbl_search.Name = "lbl_search";
-            this.lbl_search.Size = new System.Drawing.Size(393, 16);
+            this.lbl_search.Size = new System.Drawing.Size(431, 18);
             this.lbl_search.TabIndex = 15;
             this.lbl_search.Text = "NOTE:Please enter the weight value you want to search.";
             // 
@@ -899,7 +894,7 @@ namespace rs232_Project
             this.pictureBox2.ErrorImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.ErrorImage")));
             this.pictureBox2.Image = ((System.Drawing.Image)(resources.GetObject("pictureBox2.Image")));
             this.pictureBox2.InitialImage = ((System.Drawing.Image)(resources.GetObject("pictureBox2.InitialImage")));
-            this.pictureBox2.Location = new System.Drawing.Point(97, 3);
+            this.pictureBox2.Location = new System.Drawing.Point(60, 5);
             this.pictureBox2.Name = "pictureBox2";
             this.pictureBox2.Size = new System.Drawing.Size(29, 30);
             this.pictureBox2.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -910,7 +905,7 @@ namespace rs232_Project
             // pictureBox1
             // 
             this.pictureBox1.Image = global::rs232_Project.Properties.Resources.magnifying_glass;
-            this.pictureBox1.Location = new System.Drawing.Point(332, 3);
+            this.pictureBox1.Location = new System.Drawing.Point(361, 5);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(29, 30);
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
@@ -933,11 +928,11 @@ namespace rs232_Project
             this.lbl_searchandupdate.AutoSize = true;
             this.lbl_searchandupdate.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.lbl_searchandupdate.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_searchandupdate.Location = new System.Drawing.Point(118, 0);
+            this.lbl_searchandupdate.Location = new System.Drawing.Point(95, 0);
             this.lbl_searchandupdate.Name = "lbl_searchandupdate";
-            this.lbl_searchandupdate.Size = new System.Drawing.Size(208, 38);
+            this.lbl_searchandupdate.Size = new System.Drawing.Size(260, 38);
             this.lbl_searchandupdate.TabIndex = 0;
-            this.lbl_searchandupdate.Text = " UPDATE- SEARCH";
+            this.lbl_searchandupdate.Text = "DATA UPDATE- SEARCH";
             // 
             // lbl_changetare
             // 
@@ -1112,9 +1107,6 @@ namespace rs232_Project
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
-
             }
-
-       
     }
     }
