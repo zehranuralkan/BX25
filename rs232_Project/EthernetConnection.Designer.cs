@@ -252,7 +252,7 @@ namespace rs232_Project
             // 
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.panel_bilgi);
-            this.panel1.Location = new System.Drawing.Point(441, 49);
+            this.panel1.Location = new System.Drawing.Point(468, 49);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(238, 316);
             this.panel1.TabIndex = 19;

@@ -115,6 +115,7 @@
         private System.Windows.Forms.ImageList ımageList1;
         private System.Windows.Forms.Label lbl_search;
         private System.Windows.Forms.TextBox lbl_searchvalue;
+        private System.Windows.Forms.Label lbl_negative;
     }
 }
 

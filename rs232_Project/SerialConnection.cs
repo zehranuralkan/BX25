@@ -136,32 +136,20 @@ namespace rs232_Project
 
         public void PositiveOrNegative(string value1)
         {
-            string test = value1.Substring(1, 3);
-            byte[] ba = Encoding.Default.GetBytes(test);
+            byte[] ba = Encoding.Default.GetBytes(value1);
             var hexString = BitConverter.ToString(ba);
             hexString = hexString.Replace("-", "");
-            string stb = hexString.Substring(0, 2);
+            string stb = hexString.Substring(4, 2);
             string binaryval = Convert.ToString(Convert.ToInt32(stb, 16), 2);
-            if (binaryval.Length == 7)
+            string bit1 = binaryval.Substring(4, 1);
+
+            if (bit1 == "1")
             {
-                string bit1 = binaryval.Substring(4, 1);
-                if (bit1 == "1")
-                {
-
-                }
-                else
-                {
-
-                }
+                lbl_negative.Text = "-";
             }
             else
             {
-                string newbinary = binaryval + "0";
-                string value2 = newbinary.Substring(5, 1);
-                if(value2=="0")
-                {
-                    string yeni =(Convert.ToInt32 (value2) * (-1)).ToString();   
-                }
+                lbl_negative.Text = " ";
             }
         }
 
@@ -205,7 +193,8 @@ namespace rs232_Project
         private void btn_database_Click(object sender, EventArgs e)
         {
             CheckDatabase();
-            SqlCommand command = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare,Input,isStabil) values ('" + cbx_serialname.Text.ToString() + "','" + cbx_boud.Text.ToString() + "','" +cbx_datasize.Text.ToString() + "','" + lbl_weight.Text+"','" + lbl_tare.Text+"','" + lbl_inputval.Text + "','"+lbl_stabil.Text+"')", sqldata);
+            string databaseweight = lbl_negative.Text + " " + lbl_weight.Text;
+            SqlCommand command = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare,Input,isStabil) values ('" + cbx_serialname.Text.ToString() + "','" + cbx_boud.Text.ToString() + "','" +cbx_datasize.Text.ToString() + "','" + databaseweight + "','" + lbl_tare.Text+"','" + lbl_inputval.Text + "','"+lbl_stabil.Text+"')", sqldata);
             command.ExecuteNonQuery();
             sqldata.Close();
             ListData();
@@ -440,6 +429,7 @@ namespace rs232_Project
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_values = new System.Windows.Forms.Label();
             this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
+            this.lbl_negative = new System.Windows.Forms.Label();
             this.panel_giris.SuspendLayout();
             this.panel_kilo.SuspendLayout();
             this.panel_tare.SuspendLayout();
@@ -579,7 +569,7 @@ namespace rs232_Project
             // 
             this.lbl_weight.AutoSize = true;
             this.lbl_weight.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_weight.Location = new System.Drawing.Point(62, 9);
+            this.lbl_weight.Location = new System.Drawing.Point(82, 7);
             this.lbl_weight.Name = "lbl_weight";
             this.lbl_weight.Size = new System.Drawing.Size(0, 18);
             this.lbl_weight.TabIndex = 19;
@@ -588,7 +578,7 @@ namespace rs232_Project
             // 
             this.lbl_kg.AutoSize = true;
             this.lbl_kg.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_kg.Location = new System.Drawing.Point(113, 10);
+            this.lbl_kg.Location = new System.Drawing.Point(134, 10);
             this.lbl_kg.Name = "lbl_kg";
             this.lbl_kg.Size = new System.Drawing.Size(32, 18);
             this.lbl_kg.TabIndex = 20;
@@ -597,6 +587,7 @@ namespace rs232_Project
             // panel_kilo
             // 
             this.panel_kilo.BackColor = System.Drawing.Color.Wheat;
+            this.panel_kilo.Controls.Add(this.lbl_negative);
             this.panel_kilo.Controls.Add(this.lbl_stabil);
             this.panel_kilo.Controls.Add(this.lbl_output);
             this.panel_kilo.Controls.Add(this.lbl_stabilornot);
@@ -604,14 +595,14 @@ namespace rs232_Project
             this.panel_kilo.Controls.Add(this.lbl_weight);
             this.panel_kilo.Location = new System.Drawing.Point(6, 380);
             this.panel_kilo.Name = "panel_kilo";
-            this.panel_kilo.Size = new System.Drawing.Size(148, 31);
+            this.panel_kilo.Size = new System.Drawing.Size(175, 31);
             this.panel_kilo.TabIndex = 23;
             // 
             // lbl_stabil
             // 
             this.lbl_stabil.AutoSize = true;
             this.lbl_stabil.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_stabil.Location = new System.Drawing.Point(44, 10);
+            this.lbl_stabil.Location = new System.Drawing.Point(45, 10);
             this.lbl_stabil.Name = "lbl_stabil";
             this.lbl_stabil.Size = new System.Drawing.Size(0, 18);
             this.lbl_stabil.TabIndex = 29;
@@ -630,7 +621,7 @@ namespace rs232_Project
             // 
             this.lbl_stabilornot.AutoSize = true;
             this.lbl_stabilornot.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_stabilornot.Location = new System.Drawing.Point(56, 13);
+            this.lbl_stabilornot.Location = new System.Drawing.Point(70, 8);
             this.lbl_stabilornot.Name = "lbl_stabilornot";
             this.lbl_stabilornot.Size = new System.Drawing.Size(0, 18);
             this.lbl_stabilornot.TabIndex = 27;
@@ -642,14 +633,14 @@ namespace rs232_Project
             this.panel_tare.Controls.Add(this.lbl_tare);
             this.panel_tare.Location = new System.Drawing.Point(6, 411);
             this.panel_tare.Name = "panel_tare";
-            this.panel_tare.Size = new System.Drawing.Size(148, 31);
+            this.panel_tare.Size = new System.Drawing.Size(175, 31);
             this.panel_tare.TabIndex = 25;
             // 
             // lbl_tare1
             // 
             this.lbl_tare1.AutoSize = true;
             this.lbl_tare1.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_tare1.Location = new System.Drawing.Point(94, 11);
+            this.lbl_tare1.Location = new System.Drawing.Point(115, 9);
             this.lbl_tare1.Name = "lbl_tare1";
             this.lbl_tare1.Size = new System.Drawing.Size(51, 18);
             this.lbl_tare1.TabIndex = 24;
@@ -659,7 +650,7 @@ namespace rs232_Project
             // 
             this.lbl_tare.AutoSize = true;
             this.lbl_tare.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_tare.Location = new System.Drawing.Point(62, 11);
+            this.lbl_tare.Location = new System.Drawing.Point(70, 9);
             this.lbl_tare.Name = "lbl_tare";
             this.lbl_tare.Size = new System.Drawing.Size(0, 18);
             this.lbl_tare.TabIndex = 23;
@@ -703,7 +694,7 @@ namespace rs232_Project
             this.pnl_input.Controls.Add(this.lbl_input);
             this.pnl_input.Location = new System.Drawing.Point(6, 350);
             this.pnl_input.Name = "pnl_input";
-            this.pnl_input.Size = new System.Drawing.Size(148, 31);
+            this.pnl_input.Size = new System.Drawing.Size(175, 31);
             this.pnl_input.TabIndex = 27;
             // 
             // lbl_inputval
@@ -1067,6 +1058,15 @@ namespace rs232_Project
             this.ımageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.ımageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
+            // lbl_negative
+            // 
+            this.lbl_negative.AutoSize = true;
+            this.lbl_negative.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_negative.Location = new System.Drawing.Point(70, 7);
+            this.lbl_negative.Name = "lbl_negative";
+            this.lbl_negative.Size = new System.Drawing.Size(0, 16);
+            this.lbl_negative.TabIndex = 30;
+            // 
             // SerialConnection
             // 
             this.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -1107,6 +1107,7 @@ namespace rs232_Project
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
+
             }
     }
     }
