@@ -304,7 +304,7 @@ namespace rs232_Project
             datagrid_values.DataSource = ds.Tables[0];
             sqldata.Close();
         }
-
+      
         DataTable dt;
         private void lbl_searchvalue_TextChanged(object sender, EventArgs e)
         {
@@ -382,6 +382,7 @@ namespace rs232_Project
             this.lbl_weight = new System.Windows.Forms.Label();
             this.lbl_kg = new System.Windows.Forms.Label();
             this.panel_kilo = new System.Windows.Forms.Panel();
+            this.lbl_negative = new System.Windows.Forms.Label();
             this.lbl_stabil = new System.Windows.Forms.Label();
             this.lbl_output = new System.Windows.Forms.Label();
             this.lbl_stabilornot = new System.Windows.Forms.Label();
@@ -429,7 +430,6 @@ namespace rs232_Project
             this.label4 = new System.Windows.Forms.Label();
             this.lbl_values = new System.Windows.Forms.Label();
             this.ımageList1 = new System.Windows.Forms.ImageList(this.components);
-            this.lbl_negative = new System.Windows.Forms.Label();
             this.panel_giris.SuspendLayout();
             this.panel_kilo.SuspendLayout();
             this.panel_tare.SuspendLayout();
@@ -547,7 +547,7 @@ namespace rs232_Project
             // 
             // btn_database
             // 
-            this.btn_database.Location = new System.Drawing.Point(16, 155);
+            this.btn_database.Location = new System.Drawing.Point(18, 157);
             this.btn_database.Name = "btn_database";
             this.btn_database.Size = new System.Drawing.Size(133, 30);
             this.btn_database.TabIndex = 18;
@@ -597,6 +597,15 @@ namespace rs232_Project
             this.panel_kilo.Name = "panel_kilo";
             this.panel_kilo.Size = new System.Drawing.Size(175, 31);
             this.panel_kilo.TabIndex = 23;
+            // 
+            // lbl_negative
+            // 
+            this.lbl_negative.AutoSize = true;
+            this.lbl_negative.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_negative.Location = new System.Drawing.Point(70, 7);
+            this.lbl_negative.Name = "lbl_negative";
+            this.lbl_negative.Size = new System.Drawing.Size(0, 16);
+            this.lbl_negative.TabIndex = 30;
             // 
             // lbl_stabil
             // 
@@ -684,8 +693,9 @@ namespace rs232_Project
             // uDPToolStripMenuItem
             // 
             this.uDPToolStripMenuItem.Name = "uDPToolStripMenuItem";
-            this.uDPToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
-            this.uDPToolStripMenuItem.Text = "UDP";
+            this.uDPToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.uDPToolStripMenuItem.Text = "Print";
+            this.uDPToolStripMenuItem.Click += new System.EventHandler(this.uDPToolStripMenuItem_Click_1);
             // 
             // pnl_input
             // 
@@ -1058,15 +1068,6 @@ namespace rs232_Project
             this.ımageList1.ImageSize = new System.Drawing.Size(16, 16);
             this.ımageList1.TransparentColor = System.Drawing.Color.Transparent;
             // 
-            // lbl_negative
-            // 
-            this.lbl_negative.AutoSize = true;
-            this.lbl_negative.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_negative.Location = new System.Drawing.Point(70, 7);
-            this.lbl_negative.Name = "lbl_negative";
-            this.lbl_negative.Size = new System.Drawing.Size(0, 16);
-            this.lbl_negative.TabIndex = 30;
-            // 
             // SerialConnection
             // 
             this.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -1109,5 +1110,12 @@ namespace rs232_Project
             this.PerformLayout();
 
             }
+
+        private void uDPToolStripMenuItem_Click_1(object sender, EventArgs e)
+        {
+            PrinterConnection printcon = new PrinterConnection();
+            this.Hide();
+            printcon.Show();
+        }
     }
     }

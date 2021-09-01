@@ -77,3 +77,4 @@ C:\Users\yazilim.kullanici\Desktop\güncel\BX25-main\rs232_Project\obj\Debug\rs2
 C:\Users\yazilim.kullanici\Desktop\güncel\BX25-main\rs232_Project\obj\Debug\rs232_Project.csproj.GenerateResource.cache
 C:\Users\yazilim.kullanici\Desktop\güncel\BX25-main\rs232_Project\obj\Debug\rs232_Project.csproj.CoreCompileInputs.cache
 C:\Users\yazilim.kullanici\Desktop\güncel\BX25-main\rs232_Project\obj\Debug\rs232_Project.csproj.CopyComplete
+C:\Users\yazilim.kullanici\Desktop\güncel\BX25-main\rs232_Project\obj\Debug\rs232_Project.PrinterConnection.resources

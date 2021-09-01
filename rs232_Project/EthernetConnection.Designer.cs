@@ -145,12 +145,13 @@ namespace rs232_Project
             this.tCPClientToolStripMenuItem.Name = "tCPClientToolStripMenuItem";
             this.tCPClientToolStripMenuItem.Size = new System.Drawing.Size(75, 20);
             this.tCPClientToolStripMenuItem.Text = "TCP Client";
+            this.tCPClientToolStripMenuItem.Click += new System.EventHandler(this.tCPClientToolStripMenuItem_Click);
             // 
             // uDPToolStripMenuItem
             // 
             this.uDPToolStripMenuItem.Name = "uDPToolStripMenuItem";
-            this.uDPToolStripMenuItem.Size = new System.Drawing.Size(42, 20);
-            this.uDPToolStripMenuItem.Text = "UDP";
+            this.uDPToolStripMenuItem.Size = new System.Drawing.Size(54, 20);
+            this.uDPToolStripMenuItem.Text = "Printer";
             this.uDPToolStripMenuItem.Click += new System.EventHandler(this.uDPToolStripMenuItem_Click);
             // 
             // btn_disconnect

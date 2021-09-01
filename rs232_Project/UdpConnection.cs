@@ -44,6 +44,7 @@ namespace rs232_Project
             timer1.Stop();
 
         }
+   
         private TcpClient socketConnection;
         public void ListenToData()
         {
@@ -79,10 +80,15 @@ namespace rs232_Project
             //    }
             //}
         }
+
+        private void serialToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
         //private void timer1_Tick(object sender, EventArgs e)
         //{
         //    ListenToData();
-   
+
         //}
 
         //private Thread clientReceiveThread;
@@ -100,7 +106,7 @@ namespace rs232_Project
         //    }
         //}
 
-     
+
     }
 }
 

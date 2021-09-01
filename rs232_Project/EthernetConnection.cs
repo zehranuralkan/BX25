@@ -209,16 +209,24 @@ namespace rs232_Project
             btn_connect.Visible = true;
         }
 
-        private void uDPToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            UdpConnection udpcon = new UdpConnection();
-            this.Hide();
-            udpcon.Show();
-        }
-
+       
         private void timer1_Tick(object sender, EventArgs e)
         {
             ListenForData();
+        }
+
+        private void tCPClientToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrinterConnection printcon = new PrinterConnection();
+            this.Hide();
+            printcon.Show();
+        }
+
+        private void uDPToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            PrinterConnection printcon = new PrinterConnection();
+            this.Hide();
+            printcon.Show();
         }
     }
 }
