@@ -54,6 +54,7 @@ namespace rs232_Project
             this.panel_bilgi = new System.Windows.Forms.Panel();
             this.panel1 = new System.Windows.Forms.Panel();
             this.panel2 = new System.Windows.Forms.Panel();
+            this.label1 = new System.Windows.Forms.Label();
             this.menuStrip1.SuspendLayout();
             this.panel_bilgi.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -62,27 +63,28 @@ namespace rs232_Project
             // 
             // listbox_ethernetCon
             // 
-            this.listbox_ethernetCon.BackColor = System.Drawing.SystemColors.ScrollBar;
+            this.listbox_ethernetCon.BackColor = System.Drawing.SystemColors.HighlightText;
             this.listbox_ethernetCon.FormattingEnabled = true;
-            this.listbox_ethernetCon.Location = new System.Drawing.Point(11, 49);
+            this.listbox_ethernetCon.Location = new System.Drawing.Point(11, 44);
             this.listbox_ethernetCon.Margin = new System.Windows.Forms.Padding(2);
             this.listbox_ethernetCon.Name = "listbox_ethernetCon";
-            this.listbox_ethernetCon.Size = new System.Drawing.Size(400, 316);
+            this.listbox_ethernetCon.Size = new System.Drawing.Size(237, 277);
             this.listbox_ethernetCon.TabIndex = 0;
             // 
             // lbl_moduleip
             // 
             this.lbl_moduleip.AutoSize = true;
-            this.lbl_moduleip.Location = new System.Drawing.Point(10, 17);
+            this.lbl_moduleip.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_moduleip.Location = new System.Drawing.Point(34, 19);
             this.lbl_moduleip.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_moduleip.Name = "lbl_moduleip";
-            this.lbl_moduleip.Size = new System.Drawing.Size(54, 13);
+            this.lbl_moduleip.Size = new System.Drawing.Size(67, 16);
             this.lbl_moduleip.TabIndex = 1;
             this.lbl_moduleip.Text = "Module Ip";
             // 
             // tbx_moduleip
             // 
-            this.tbx_moduleip.Location = new System.Drawing.Point(12, 41);
+            this.tbx_moduleip.Location = new System.Drawing.Point(36, 43);
             this.tbx_moduleip.Margin = new System.Windows.Forms.Padding(2);
             this.tbx_moduleip.Name = "tbx_moduleip";
             this.tbx_moduleip.Size = new System.Drawing.Size(115, 20);
@@ -92,16 +94,17 @@ namespace rs232_Project
             // lbl_port
             // 
             this.lbl_port.AutoSize = true;
-            this.lbl_port.Location = new System.Drawing.Point(136, 17);
+            this.lbl_port.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_port.Location = new System.Drawing.Point(197, 19);
             this.lbl_port.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_port.Name = "lbl_port";
-            this.lbl_port.Size = new System.Drawing.Size(26, 13);
+            this.lbl_port.Size = new System.Drawing.Size(32, 16);
             this.lbl_port.TabIndex = 3;
             this.lbl_port.Text = "Port";
             // 
             // tbx_port
             // 
-            this.tbx_port.Location = new System.Drawing.Point(130, 41);
+            this.tbx_port.Location = new System.Drawing.Point(191, 43);
             this.tbx_port.Margin = new System.Windows.Forms.Padding(2);
             this.tbx_port.Name = "tbx_port";
             this.tbx_port.Size = new System.Drawing.Size(70, 20);
@@ -110,10 +113,10 @@ namespace rs232_Project
             // 
             // btn_connect
             // 
-            this.btn_connect.Location = new System.Drawing.Point(130, 76);
+            this.btn_connect.Location = new System.Drawing.Point(142, 80);
             this.btn_connect.Margin = new System.Windows.Forms.Padding(2);
             this.btn_connect.Name = "btn_connect";
-            this.btn_connect.Size = new System.Drawing.Size(68, 20);
+            this.btn_connect.Size = new System.Drawing.Size(68, 22);
             this.btn_connect.TabIndex = 5;
             this.btn_connect.Text = "CONNECT";
             this.btn_connect.UseVisualStyleBackColor = true;
@@ -129,7 +132,7 @@ namespace rs232_Project
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Padding = new System.Windows.Forms.Padding(4, 2, 0, 2);
-            this.menuStrip1.Size = new System.Drawing.Size(728, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(405, 24);
             this.menuStrip1.TabIndex = 6;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -156,10 +159,10 @@ namespace rs232_Project
             // 
             // btn_disconnect
             // 
-            this.btn_disconnect.Location = new System.Drawing.Point(107, 76);
+            this.btn_disconnect.Location = new System.Drawing.Point(119, 80);
             this.btn_disconnect.Margin = new System.Windows.Forms.Padding(2);
             this.btn_disconnect.Name = "btn_disconnect";
-            this.btn_disconnect.Size = new System.Drawing.Size(93, 20);
+            this.btn_disconnect.Size = new System.Drawing.Size(93, 22);
             this.btn_disconnect.TabIndex = 7;
             this.btn_disconnect.Text = "DISCONNECT";
             this.btn_disconnect.UseVisualStyleBackColor = true;
@@ -181,69 +184,75 @@ namespace rs232_Project
             // lbl_kilo
             // 
             this.lbl_kilo.AutoSize = true;
-            this.lbl_kilo.Location = new System.Drawing.Point(90, 46);
+            this.lbl_kilo.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_kilo.Location = new System.Drawing.Point(110, 46);
             this.lbl_kilo.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_kilo.Name = "lbl_kilo";
-            this.lbl_kilo.Size = new System.Drawing.Size(22, 13);
+            this.lbl_kilo.Size = new System.Drawing.Size(26, 16);
             this.lbl_kilo.TabIndex = 9;
             this.lbl_kilo.Text = "KG";
             // 
             // lbl_tare
             // 
             this.lbl_tare.AutoSize = true;
-            this.lbl_tare.Location = new System.Drawing.Point(22, 15);
+            this.lbl_tare.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_tare.Location = new System.Drawing.Point(32, 15);
             this.lbl_tare.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_tare.Name = "lbl_tare";
-            this.lbl_tare.Size = new System.Drawing.Size(36, 13);
+            this.lbl_tare.Size = new System.Drawing.Size(45, 16);
             this.lbl_tare.TabIndex = 10;
             this.lbl_tare.Text = "TARE";
             // 
             // lbl_weightvalue
             // 
             this.lbl_weightvalue.AutoSize = true;
-            this.lbl_weightvalue.Location = new System.Drawing.Point(58, 46);
+            this.lbl_weightvalue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_weightvalue.Location = new System.Drawing.Point(73, 46);
             this.lbl_weightvalue.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_weightvalue.Name = "lbl_weightvalue";
-            this.lbl_weightvalue.Size = new System.Drawing.Size(0, 13);
+            this.lbl_weightvalue.Size = new System.Drawing.Size(0, 16);
             this.lbl_weightvalue.TabIndex = 11;
             // 
             // lbl_tarevalue
             // 
             this.lbl_tarevalue.AutoSize = true;
-            this.lbl_tarevalue.Location = new System.Drawing.Point(62, 15);
+            this.lbl_tarevalue.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_tarevalue.Location = new System.Drawing.Point(72, 15);
             this.lbl_tarevalue.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_tarevalue.Name = "lbl_tarevalue";
-            this.lbl_tarevalue.Size = new System.Drawing.Size(0, 13);
+            this.lbl_tarevalue.Size = new System.Drawing.Size(0, 16);
             this.lbl_tarevalue.TabIndex = 12;
             // 
             // lbl_negative
             // 
             this.lbl_negative.AutoSize = true;
-            this.lbl_negative.Location = new System.Drawing.Point(51, 46);
+            this.lbl_negative.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_negative.Location = new System.Drawing.Point(61, 46);
             this.lbl_negative.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_negative.Name = "lbl_negative";
-            this.lbl_negative.Size = new System.Drawing.Size(0, 13);
+            this.lbl_negative.Size = new System.Drawing.Size(0, 16);
             this.lbl_negative.TabIndex = 16;
             // 
             // lbl_stabil
             // 
             this.lbl_stabil.AutoSize = true;
-            this.lbl_stabil.Location = new System.Drawing.Point(32, 46);
+            this.lbl_stabil.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.lbl_stabil.Location = new System.Drawing.Point(42, 46);
             this.lbl_stabil.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.lbl_stabil.Name = "lbl_stabil";
-            this.lbl_stabil.Size = new System.Drawing.Size(0, 13);
+            this.lbl_stabil.Size = new System.Drawing.Size(0, 16);
             this.lbl_stabil.TabIndex = 17;
             // 
             // panel_bilgi
             // 
-            this.panel_bilgi.BackColor = System.Drawing.SystemColors.GradientActiveCaption;
+            this.panel_bilgi.BackColor = System.Drawing.Color.Honeydew;
             this.panel_bilgi.Controls.Add(this.lbl_stabil);
             this.panel_bilgi.Controls.Add(this.lbl_negative);
             this.panel_bilgi.Controls.Add(this.lbl_tarevalue);
             this.panel_bilgi.Controls.Add(this.lbl_weightvalue);
             this.panel_bilgi.Controls.Add(this.lbl_tare);
             this.panel_bilgi.Controls.Add(this.lbl_kilo);
-            this.panel_bilgi.Location = new System.Drawing.Point(46, 207);
+            this.panel_bilgi.Location = new System.Drawing.Point(114, 175);
             this.panel_bilgi.Margin = new System.Windows.Forms.Padding(2);
             this.panel_bilgi.Name = "panel_bilgi";
             this.panel_bilgi.Size = new System.Drawing.Size(162, 92);
@@ -251,16 +260,18 @@ namespace rs232_Project
             // 
             // panel1
             // 
+            this.panel1.BackColor = System.Drawing.Color.LightSteelBlue;
+            this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.panel2);
             this.panel1.Controls.Add(this.panel_bilgi);
-            this.panel1.Location = new System.Drawing.Point(468, 49);
+            this.panel1.Location = new System.Drawing.Point(8, 44);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(238, 316);
+            this.panel1.Size = new System.Drawing.Size(383, 283);
             this.panel1.TabIndex = 19;
             // 
             // panel2
             // 
-            this.panel2.BackColor = System.Drawing.SystemColors.Control;
+            this.panel2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
             this.panel2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.panel2.Controls.Add(this.btn_connect);
             this.panel2.Controls.Add(this.lbl_moduleip);
@@ -269,16 +280,26 @@ namespace rs232_Project
             this.panel2.Controls.Add(this.lbl_port);
             this.panel2.Controls.Add(this.tbx_port);
             this.panel2.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.panel2.Location = new System.Drawing.Point(13, 34);
+            this.panel2.Location = new System.Drawing.Point(30, 39);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(213, 120);
+            this.panel2.Size = new System.Drawing.Size(318, 120);
             this.panel2.TabIndex = 19;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Mistral", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label1.Location = new System.Drawing.Point(133, 2);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(116, 34);
+            this.label1.TabIndex = 20;
+            this.label1.Text = "TCP-Client";
             // 
             // EthernetConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(728, 395);
+            this.ClientSize = new System.Drawing.Size(405, 337);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.lbl_deger);
             this.Controls.Add(this.listbox_ethernetCon);
@@ -293,6 +314,7 @@ namespace rs232_Project
             this.panel_bilgi.ResumeLayout(false);
             this.panel_bilgi.PerformLayout();
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.ResumeLayout(false);
@@ -324,5 +346,6 @@ namespace rs232_Project
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.ToolStripMenuItem uDPToolStripMenuItem;
+        private System.Windows.Forms.Label label1;
     }
 }

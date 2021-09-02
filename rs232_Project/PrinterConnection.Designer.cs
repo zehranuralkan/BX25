@@ -30,7 +30,6 @@
         {
             this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
-            this.data_listbox = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.serialToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.tCPClientToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -46,6 +45,15 @@
             this.btn_print = new System.Windows.Forms.Button();
             this.panel_serial = new System.Windows.Forms.Panel();
             this.pnl_gross = new System.Windows.Forms.Panel();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.lbl_gross = new System.Windows.Forms.Label();
+            this.lbl_net = new System.Windows.Forms.Label();
+            this.lbl_tare = new System.Windows.Forms.Label();
             this.label11 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label8 = new System.Windows.Forms.Label();
@@ -57,9 +65,8 @@
             this.label2 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.lbl_save = new System.Windows.Forms.Button();
-            this.lbl_tare = new System.Windows.Forms.Label();
-            this.lbl_net = new System.Windows.Forms.Label();
-            this.lbl_gross = new System.Windows.Forms.Label();
+            this.label14 = new System.Windows.Forms.Label();
+            this.data_listbox = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.panel_serial.SuspendLayout();
             this.pnl_gross.SuspendLayout();
@@ -74,15 +81,6 @@
             this.label1.TabIndex = 17;
             this.label1.Text = "a";
             // 
-            // data_listbox
-            // 
-            this.data_listbox.BackColor = System.Drawing.SystemColors.ControlLight;
-            this.data_listbox.FormattingEnabled = true;
-            this.data_listbox.Location = new System.Drawing.Point(12, 247);
-            this.data_listbox.Name = "data_listbox";
-            this.data_listbox.Size = new System.Drawing.Size(233, 199);
-            this.data_listbox.TabIndex = 15;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -91,7 +89,7 @@
             this.printToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(518, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(509, 24);
             this.menuStrip1.TabIndex = 18;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -125,7 +123,7 @@
             // 
             this.lbl_name.AutoSize = true;
             this.lbl_name.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_name.Location = new System.Drawing.Point(52, 7);
+            this.lbl_name.Location = new System.Drawing.Point(47, 17);
             this.lbl_name.Name = "lbl_name";
             this.lbl_name.Size = new System.Drawing.Size(35, 13);
             this.lbl_name.TabIndex = 0;
@@ -134,7 +132,7 @@
             // cbx_name
             // 
             this.cbx_name.FormattingEnabled = true;
-            this.cbx_name.Location = new System.Drawing.Point(55, 23);
+            this.cbx_name.Location = new System.Drawing.Point(50, 33);
             this.cbx_name.Name = "cbx_name";
             this.cbx_name.Size = new System.Drawing.Size(120, 21);
             this.cbx_name.TabIndex = 1;
@@ -143,7 +141,7 @@
             // 
             this.lbl_baud.AutoSize = true;
             this.lbl_baud.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.lbl_baud.Location = new System.Drawing.Point(56, 47);
+            this.lbl_baud.Location = new System.Drawing.Point(51, 57);
             this.lbl_baud.Name = "lbl_baud";
             this.lbl_baud.Size = new System.Drawing.Size(32, 13);
             this.lbl_baud.TabIndex = 2;
@@ -154,7 +152,7 @@
             this.cbx_boud.FormattingEnabled = true;
             this.cbx_boud.Items.AddRange(new object[] {
             "9600"});
-            this.cbx_boud.Location = new System.Drawing.Point(57, 66);
+            this.cbx_boud.Location = new System.Drawing.Point(52, 76);
             this.cbx_boud.Name = "cbx_boud";
             this.cbx_boud.Size = new System.Drawing.Size(119, 21);
             this.cbx_boud.TabIndex = 3;
@@ -162,7 +160,7 @@
             // btn_open
             // 
             this.btn_open.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_open.Location = new System.Drawing.Point(63, 105);
+            this.btn_open.Location = new System.Drawing.Point(58, 115);
             this.btn_open.Name = "btn_open";
             this.btn_open.Size = new System.Drawing.Size(112, 21);
             this.btn_open.TabIndex = 4;
@@ -173,7 +171,7 @@
             // btn_close
             // 
             this.btn_close.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_close.Location = new System.Drawing.Point(61, 136);
+            this.btn_close.Location = new System.Drawing.Point(56, 146);
             this.btn_close.Name = "btn_close";
             this.btn_close.Size = new System.Drawing.Size(114, 23);
             this.btn_close.TabIndex = 5;
@@ -184,7 +182,7 @@
             // btn_print
             // 
             this.btn_print.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.btn_print.Location = new System.Drawing.Point(59, 105);
+            this.btn_print.Location = new System.Drawing.Point(54, 115);
             this.btn_print.Name = "btn_print";
             this.btn_print.Size = new System.Drawing.Size(114, 25);
             this.btn_print.TabIndex = 14;
@@ -204,15 +202,21 @@
             this.panel_serial.Controls.Add(this.cbx_name);
             this.panel_serial.Controls.Add(this.lbl_name);
             this.panel_serial.ForeColor = System.Drawing.SystemColors.ActiveCaption;
-            this.panel_serial.Location = new System.Drawing.Point(12, 58);
+            this.panel_serial.Location = new System.Drawing.Point(13, 69);
             this.panel_serial.Name = "panel_serial";
-            this.panel_serial.Size = new System.Drawing.Size(233, 169);
+            this.panel_serial.Size = new System.Drawing.Size(233, 196);
             this.panel_serial.TabIndex = 16;
             // 
             // pnl_gross
             // 
             this.pnl_gross.BackColor = System.Drawing.SystemColors.ButtonHighlight;
             this.pnl_gross.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnl_gross.Controls.Add(this.label13);
+            this.pnl_gross.Controls.Add(this.label12);
+            this.pnl_gross.Controls.Add(this.label10);
+            this.pnl_gross.Controls.Add(this.label7);
+            this.pnl_gross.Controls.Add(this.label6);
+            this.pnl_gross.Controls.Add(this.label5);
             this.pnl_gross.Controls.Add(this.lbl_gross);
             this.pnl_gross.Controls.Add(this.lbl_net);
             this.pnl_gross.Controls.Add(this.lbl_tare);
@@ -226,10 +230,91 @@
             this.pnl_gross.Controls.Add(this.label3);
             this.pnl_gross.Controls.Add(this.label2);
             this.pnl_gross.ForeColor = System.Drawing.Color.Black;
-            this.pnl_gross.Location = new System.Drawing.Point(265, 58);
+            this.pnl_gross.Location = new System.Drawing.Point(266, 69);
             this.pnl_gross.Name = "pnl_gross";
             this.pnl_gross.Size = new System.Drawing.Size(228, 388);
             this.pnl_gross.TabIndex = 19;
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(14, 305);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(18, 13);
+            this.label13.TabIndex = 24;
+            this.label13.Text = "N:";
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(14, 279);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(17, 13);
+            this.label12.TabIndex = 23;
+            this.label12.Text = "T:";
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(14, 256);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(18, 13);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "G:";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(14, 164);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(23, 13);
+            this.label7.TabIndex = 21;
+            this.label7.Text = "Cn:";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(10, 136);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(32, 13);
+            this.label6.TabIndex = 20;
+            this.label6.Text = "Saat:";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(11, 111);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(34, 13);
+            this.label5.TabIndex = 19;
+            this.label5.Text = "Tarih:";
+            // 
+            // lbl_gross
+            // 
+            this.lbl_gross.AutoSize = true;
+            this.lbl_gross.Location = new System.Drawing.Point(76, 256);
+            this.lbl_gross.Name = "lbl_gross";
+            this.lbl_gross.Size = new System.Drawing.Size(10, 13);
+            this.lbl_gross.TabIndex = 18;
+            this.lbl_gross.Text = " ";
+            // 
+            // lbl_net
+            // 
+            this.lbl_net.AutoSize = true;
+            this.lbl_net.Location = new System.Drawing.Point(79, 305);
+            this.lbl_net.Name = "lbl_net";
+            this.lbl_net.Size = new System.Drawing.Size(10, 13);
+            this.lbl_net.TabIndex = 17;
+            this.lbl_net.Text = " ";
+            // 
+            // lbl_tare
+            // 
+            this.lbl_tare.AutoSize = true;
+            this.lbl_tare.Location = new System.Drawing.Point(76, 279);
+            this.lbl_tare.Name = "lbl_tare";
+            this.lbl_tare.Size = new System.Drawing.Size(10, 13);
+            this.lbl_tare.TabIndex = 16;
+            this.lbl_tare.Text = " ";
             // 
             // label11
             // 
@@ -262,7 +347,7 @@
             // 
             this.lbl_cn.AutoSize = true;
             this.lbl_cn.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_cn.Location = new System.Drawing.Point(17, 162);
+            this.lbl_cn.Location = new System.Drawing.Point(76, 175);
             this.lbl_cn.Name = "lbl_cn";
             this.lbl_cn.Size = new System.Drawing.Size(0, 16);
             this.lbl_cn.TabIndex = 10;
@@ -271,7 +356,7 @@
             // 
             this.lbl_hour.AutoSize = true;
             this.lbl_hour.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_hour.Location = new System.Drawing.Point(17, 125);
+            this.lbl_hour.Location = new System.Drawing.Point(76, 138);
             this.lbl_hour.Name = "lbl_hour";
             this.lbl_hour.Size = new System.Drawing.Size(0, 16);
             this.lbl_hour.TabIndex = 9;
@@ -280,7 +365,7 @@
             // 
             this.lbl_date.AutoSize = true;
             this.lbl_date.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
-            this.lbl_date.Location = new System.Drawing.Point(17, 92);
+            this.lbl_date.Location = new System.Drawing.Point(76, 105);
             this.lbl_date.Name = "lbl_date";
             this.lbl_date.Size = new System.Drawing.Size(0, 16);
             this.lbl_date.TabIndex = 8;
@@ -314,7 +399,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(305, 28);
+            this.button1.Location = new System.Drawing.Point(393, 463);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(100, 24);
             this.button1.TabIndex = 4;
@@ -324,7 +409,7 @@
             // 
             // lbl_save
             // 
-            this.lbl_save.Location = new System.Drawing.Point(416, 27);
+            this.lbl_save.Location = new System.Drawing.Point(299, 463);
             this.lbl_save.Name = "lbl_save";
             this.lbl_save.Size = new System.Drawing.Size(76, 24);
             this.lbl_save.TabIndex = 20;
@@ -332,44 +417,38 @@
             this.lbl_save.UseVisualStyleBackColor = true;
             this.lbl_save.Click += new System.EventHandler(this.lbl_save_Click);
             // 
-            // lbl_tare
+            // label14
             // 
-            this.lbl_tare.AutoSize = true;
-            this.lbl_tare.Location = new System.Drawing.Point(14, 279);
-            this.lbl_tare.Name = "lbl_tare";
-            this.lbl_tare.Size = new System.Drawing.Size(25, 13);
-            this.lbl_tare.TabIndex = 16;
-            this.lbl_tare.Text = "tare";
+            this.label14.AutoSize = true;
+            this.label14.Font = new System.Drawing.Font("Mistral", 24F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(162)));
+            this.label14.Location = new System.Drawing.Point(204, 28);
+            this.label14.Name = "label14";
+            this.label14.Size = new System.Drawing.Size(109, 38);
+            this.label14.TabIndex = 21;
+            this.label14.Text = "PRINTER";
             // 
-            // lbl_net
+            // data_listbox
             // 
-            this.lbl_net.AutoSize = true;
-            this.lbl_net.Location = new System.Drawing.Point(17, 315);
-            this.lbl_net.Name = "lbl_net";
-            this.lbl_net.Size = new System.Drawing.Size(22, 13);
-            this.lbl_net.TabIndex = 17;
-            this.lbl_net.Text = "net";
-            // 
-            // lbl_gross
-            // 
-            this.lbl_gross.AutoSize = true;
-            this.lbl_gross.Location = new System.Drawing.Point(14, 256);
-            this.lbl_gross.Name = "lbl_gross";
-            this.lbl_gross.Size = new System.Drawing.Size(32, 13);
-            this.lbl_gross.TabIndex = 18;
-            this.lbl_gross.Text = "gross";
+            this.data_listbox.BackColor = System.Drawing.SystemColors.ButtonFace;
+            this.data_listbox.FormattingEnabled = true;
+            this.data_listbox.HorizontalScrollbar = true;
+            this.data_listbox.Location = new System.Drawing.Point(13, 271);
+            this.data_listbox.Name = "data_listbox";
+            this.data_listbox.Size = new System.Drawing.Size(233, 186);
+            this.data_listbox.TabIndex = 16;
             // 
             // PrinterConnection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
-            this.ClientSize = new System.Drawing.Size(518, 466);
+            this.ClientSize = new System.Drawing.Size(509, 496);
+            this.Controls.Add(this.data_listbox);
+            this.Controls.Add(this.label14);
             this.Controls.Add(this.lbl_save);
             this.Controls.Add(this.pnl_gross);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.panel_serial);
-            this.Controls.Add(this.data_listbox);
             this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.button1);
             this.MainMenuStrip = this.menuStrip1;
@@ -390,7 +469,6 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ListBox data_listbox;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem serialToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tCPClientToolStripMenuItem;
@@ -420,5 +498,13 @@
         private System.Windows.Forms.Label lbl_tare;
         private System.Windows.Forms.Label lbl_net;
         private System.Windows.Forms.Label lbl_gross;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.Label label13;
+        private System.Windows.Forms.Label label12;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.Label label14;
+        private System.Windows.Forms.ListBox data_listbox;
     }
 }

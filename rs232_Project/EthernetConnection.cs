@@ -137,33 +137,33 @@ namespace rs232_Project
                 lbl_weightvalue.Text = new_value.ToString();
             }
             else if (bit210 == "010")
-            { 
+            {
                 lbl_weightvalue.Text = value2.ToString();
             }
             else if (bit210 == "011")
             {
                 double new_value = (Convert.ToInt32(value2) * 0.1);
-                lbl_weightvalue.Text = new_value.ToString();
+                lbl_weightvalue.Text = new_value.ToString("0.0");
             }
             else if (bit210 == "100")
             {
                 double new_value = (Convert.ToInt32(value2) * 0.01);
-                lbl_weightvalue.Text = new_value.ToString();
+                lbl_weightvalue.Text = new_value.ToString("0.00");
             }
             else if (bit210 == "101")
             {
                 double new_value = (Convert.ToInt32(value2) * 0.001);
-                lbl_weightvalue.Text = new_value.ToString();
+                lbl_weightvalue.Text = new_value.ToString("0.000");
             }
             else if (bit210 == "110")
             {
                 double new_value = (Convert.ToInt32(value2) * 0.0001);
-                lbl_weightvalue.Text = new_value.ToString();
+                lbl_weightvalue.Text = new_value.ToString("0.0000");
             }
             else if (bit210 == "111")
             {
                 double new_value = (Convert.ToInt32(value2) * 0.00001);
-                lbl_weightvalue.Text = new_value.ToString();
+                lbl_weightvalue.Text = new_value.ToString("0.00000");
             }
         }
         private void CheckParse(string data1)
@@ -172,11 +172,12 @@ namespace rs232_Project
             try
             {
                 int parse = data1.IndexOf(' ');
-                lbl_weightvalue.Text = data1.Substring(6, parse);
+                //lbl_weightvalue.Text = data1.Substring(6, parse);
                 lbl_tarevalue.Text = data1.Substring(12, parse);
             }
             catch
             {
+
             }
         }
         private void Main()
@@ -186,7 +187,6 @@ namespace rs232_Project
         private void btn_connect_Click(object sender, EventArgs e)
         {
             Main();
-            
             btn_connect.Visible = false;
             btn_disconnect.Visible = true;
         }
@@ -209,7 +209,6 @@ namespace rs232_Project
             btn_connect.Visible = true;
         }
 
-       
         private void timer1_Tick(object sender, EventArgs e)
         {
             ListenForData();

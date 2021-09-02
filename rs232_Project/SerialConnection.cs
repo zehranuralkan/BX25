@@ -194,7 +194,12 @@ namespace rs232_Project
         {
             CheckDatabase();
             string databaseweight = lbl_negative.Text + " " + lbl_weight.Text;
-            SqlCommand command = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare,Input,isStabil) values ('" + cbx_serialname.Text.ToString() + "','" + cbx_boud.Text.ToString() + "','" +cbx_datasize.Text.ToString() + "','" + databaseweight + "','" + lbl_tare.Text+"','" + lbl_inputval.Text + "','"+lbl_stabil.Text+"')", sqldata);
+            SqlCommand command = new SqlCommand("insert into Serial (Names,Bauds,DataSizes,Weights,Tare,Input,isStabil) values ('" + cbx_serialname.Text.ToString() + "'," +
+                "'" + cbx_boud.Text.ToString() + "'," +
+                "'" +cbx_datasize.Text.ToString() + "'," +
+                "'" + databaseweight + "','" + lbl_tare.Text+"','" +
+                "" + lbl_inputval.Text + "'," +
+                "'"+lbl_stabil.Text+"')", sqldata);
             command.ExecuteNonQuery();
             sqldata.Close();
             ListData();
@@ -236,7 +241,7 @@ namespace rs232_Project
             lbl_stabil.Text = " ";
             lbl_listinfo.Text = " ";
         }
-        int id = 1;
+       
         private void datagrid_values_MouseClick(object sender, MouseEventArgs e)
         {
             lbl_changeid.Text = datagrid_values.CurrentRow.Cells[0].Value.ToString();
@@ -288,9 +293,9 @@ namespace rs232_Project
         {
             try
             {
-                sqldata.Open();
+                sqldata.Open(); 
             }
-            catch (SqlException)
+            catch (SqlException) 
             {
                 MessageBox.Show("Sql Exception");
             }

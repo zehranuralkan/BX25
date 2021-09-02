@@ -19,9 +19,9 @@ namespace rs232_Project
         {
             InitializeComponent();
         }
+       
         public static SerialPort serialPort = new SerialPort();//serial port tanitimi
         public static string[] ports = SerialPort.GetPortNames();
-
         public void OpenConnection(string portName, int boudrate)
         {
             if (serialPort.IsOpen)
@@ -53,6 +53,8 @@ namespace rs232_Project
                 value = serialPort.ReadLine();//serial okuma 
                 Control.CheckForIllegalCrossThreadCalls = false;
                 data_listbox.Items.Add(value); //okunan degerler listbox gosterilir
+              
+
             }
 
             catch (InvalidOperationException)
@@ -75,7 +77,8 @@ namespace rs232_Project
                 MessageBox.Show("Socket Exception ");
             }
             catch (System.IO.IOException)
-            { }
+            {
+            }
 
          }
        public void  CheckParse(string newvalue)
@@ -96,9 +99,7 @@ namespace rs232_Project
             serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived); //verileri alır
             ComPortList();
             btn_close.Visible = false;
-            btn_print.Visible = false;
-            
-
+            btn_print.Visible = false; 
         }
 
         private void serialToolStripMenuItem_Click(object sender, EventArgs e)
@@ -142,8 +143,7 @@ namespace rs232_Project
 
         private void btn_print_Click(object sender, EventArgs e)
         {
-           
-            serialPort.Write("P");
+            serialPort.Write("P"); 
             label2.Text = " ";
             label3.Text = " ";
             label4.Text = " ";
@@ -156,29 +156,24 @@ namespace rs232_Project
             lbl_tare.Text = "";
             lbl_net.Text = ""; 
             label11.Text = "  ";
-
-
+     
         }
+       
         private void button1_Click(object sender, EventArgs e)
         {
-           
                 label2.Text = "Baykon A.S.";
                 label3.Text = "www.baykon.com";
                 label4.Text = "Istanbul,Türkiye";
-                lbl_date.Text = data_listbox.Items[6].ToString();
-                lbl_hour.Text = data_listbox.Items[7].ToString();
-                lbl_cn.Text = data_listbox.Items[8].ToString();
+                lbl_date.Text = value.Substring(0,10);
+                lbl_hour.Text = value.Substring(13, 5);
+                lbl_cn.Text = value.Substring(27, 3);
                 label8.Text = "Operator:  Zehra Nur Alkan ";
                 label9.Text = "Malzeme: Bilinmiyor";
-                lbl_gross.Text = data_listbox.Items[10].ToString();
-                lbl_tare.Text = data_listbox.Items[11].ToString();
-                lbl_net.Text = data_listbox.Items[12].ToString();
- 
-            label11.Text = "*Teşekkürler*";
-
-       
-
-
+                lbl_gross.Text = value.Substring(39, 5);
+                lbl_tare.Text = value.Substring(56, 4);
+                lbl_net.Text = value.Substring(71, 5);
+                label11.Text = "*Teşekkürler*";
+                
         }
 
         private void btn_close_Click(object sender, EventArgs e)
@@ -200,6 +195,7 @@ namespace rs232_Project
             lbl_tare.Text = "";
             lbl_net.Text = "";
             label11.Text = " ";
+             
         }
        
         SqlConnection sqldata = new SqlConnection("Data Source=emansuroglu; Initial Catalog=BX25_Project; User Id=sa; password=Baykon1987");
@@ -207,10 +203,11 @@ namespace rs232_Project
         private void lbl_save_Click(object sender, EventArgs e)
         { 
             CheckDatabase();
-            SqlCommand command = new SqlCommand("insert into Receipt (Date,Time,Cn,Gross,Tare,Net) values ('" + lbl_date.Text.Substring(13,10) + "','" + lbl_hour.Text.Substring(18,5) + "','" + lbl_cn.Text.Substring(19,4) + "','" + lbl_gross.Text.Substring(15,6) + "','" + lbl_tare.Text.Substring(15,6) + "','" + lbl_net.Text.Substring(16,6) + "')", sqldata);
+            SqlCommand command = new SqlCommand("insert into Receipt (Date,Time,Cn,Gross,Tare,Net) values ('" + lbl_date.Text  + "','" + lbl_hour.Text  + "','" + lbl_cn.Text  + "','" + lbl_gross.Text  + "','" + lbl_tare.Text  + "','" + lbl_net.Text  + "')", sqldata);
             command.ExecuteNonQuery();
             sqldata.Close();
-            data_listbox.Items.Clear(); 
+            data_listbox.Items.Clear();
+            MessageBox.Show("kaydedildi");
         } 
 
         public void CheckDatabase()
@@ -224,7 +221,5 @@ namespace rs232_Project
                 MessageBox.Show("Sql Exception");
             }
         }
-
-      
     }
 }
